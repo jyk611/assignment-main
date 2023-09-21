@@ -564,6 +564,13 @@ def lectLogin():
 
 @app.route("/lectDashboard", methods=['GET'])
 def lectDashboard():
+    # Fetch student data from the database here
+    cursor = db_conn.cursor()
+    select_students_sql = "SELECT * FROM students"
+    cursor.execute(select_students_sql)
+    student_data = cursor.fetchall()
+    cursor.close()
+
     return render_template('lectDashboard.html', student_data=student_data)
 
 # ------------------------------------------------------------------- Lecturer END -------------------------------------------------------------------#
