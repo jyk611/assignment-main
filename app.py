@@ -38,7 +38,6 @@ def getCompFiles(bucket, path):
 @app.route("/", methods=['GET'], endpoint='index')
 def index():
 
-
     return render_template('index.html')
 
 @app.route('/s3_image/<path:filename>')
