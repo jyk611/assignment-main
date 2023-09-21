@@ -542,12 +542,15 @@ def lectRegister():
 @app.route("/lectDashboard", methods=['GET'])
 def lectDashboard():
     # Retrieve the lecturer's email from the session
-    lecturer_email = session.get('lecturer_email')
+    lecturer_email = request.args.get('lectEmail')
 
     if lecturer_email:
         # Fetch student data based on the lecturer's email
         cursor = db_conn.cursor()
-        select_students_sql = "SELECT * FROM students WHERE ucSuperEmail = %s"
+        select_students_sql = "SELECT * \
+                                FROM students s\
+                                JOIN lecturer l on s.ucSuperEmail = l.lectEmail \
+                                WHERE l.lectEmail = %s"
         cursor.execute(select_students_sql, (lecturer_email,))
         student_data = cursor.fetchall()
 
