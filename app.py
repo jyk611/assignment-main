@@ -548,29 +548,14 @@ def lectRegister():
             return str(e)  # Handle any database errors here
     return render_template('lectRegister.html')
 
-
-@app.route("/lectLogin", methods=['GET', 'POST'])
-def lectLogin():
-    if request.method == 'POST':
-        return render_template('index.html', user_authenticated=True)
-
-    # Fetch data from the database here
-    cursor = db_conn.cursor()
-    select_sql = "SELECT lectEmail, password FROM lecturer"
-    cursor.execute(select_sql)
-    data = cursor.fetchall()
-    cursor.close()
-    return render_template('lectLogin.html', lecturer=data)
-
 @app.route("/lectDashboard", methods=['GET'])
 def lectDashboard():
-    # Fetch student data from the database here
-    cursor = db_conn.cursor()
-    select_students_sql = "SELECT * FROM students"
-    cursor.execute(select_students_sql)
-    student_data = cursor.fetchall()
-    cursor.close()
-
+    if student_data:
+        print(student_data)
+        return render_template('lectDashboard.html', student_data=student_data)
+    else:
+        print("Student data is empty.")
+        return render_template('lectDashboard.html', student_data=[])
     return render_template('lectDashboard.html', student_data=student_data)
 
 # ------------------------------------------------------------------- Lecturer END -------------------------------------------------------------------#
