@@ -39,7 +39,7 @@ def getCompFiles(bucket, path):
 def index():
 
 
-    return render_template('index.html', my_bucket=bucket, image_files=list_of_comp, comp_data = comp)
+    return render_template('index.html')
 
 @app.route('/s3_image/<path:filename>')
 def s3_image(filename):
