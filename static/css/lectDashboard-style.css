@@ -353,8 +353,9 @@ header {
 }
 
 .t-op {
-    font-size: 18px;
-    letter-spacing: 0px;
+    font-size: 16px;
+    color: black;
+    margin-bottom: 10px;
 }
 
 .items {
