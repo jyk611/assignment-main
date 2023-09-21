@@ -90,7 +90,7 @@
                      
                            {% for students in student_data %}
                               <div class="report-item">
-                                <p class="t-op">{{ students['studentID'] }}</p>
+                                <p class="t-op">{{ students.studentID }}</p>
                                 <p class="t-op">{{ students.firstName }}</p>
                                 <p class="t-op">{{ students.lastName }}</p>
                                 <p class="t-op">{{ students.stud_email }}</p>
@@ -102,7 +102,7 @@
                            <!-- Debugging statement if data is not present -->
                            <p>No data available.</p>
                         {% endif %}
-                     </div>
+                    </div>
 				</div>
 				  
 			</div>
