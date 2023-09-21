@@ -235,20 +235,11 @@ def login():
             if data:
                 # Data is found in the database
                 stored_password = data[1]
-                lecturer_id = data[2]
+                name = data[2]
 
                 if password == stored_password:
                     # Passwords match, user is authenticated
-                    # Fetch student data for this lecturer
-                    select_students_sql = "SELECT * \
-                                        FROM students s\
-                                        JOIN lecturer l on s.ucSuperEmail = l.lectEmail \
-                                        WHERE l.lectEmail = %s"
-                    cursor.execute(select_students_sql, (email,))
-                    student_data = cursor.fetchall()
-                    
-                    print(student_data)
-                    return render_template('lectDashboard.html', lectID=lecturer_id, student_data=student_data)
+                    return render_template('index.html', user_login_name=name, studentID=None, user_authenticated=True)
                 else:
                     return render_template('login.html', pwd_error="Incorrect password. Please try again.")
             else:
@@ -550,13 +541,20 @@ def lectRegister():
 
 @app.route("/lectDashboard", methods=['GET'])
 def lectDashboard():
-    if student_data:
-        print(student_data)
+    # Retrieve the lecturer's email from the session
+    lecturer_email = session.get('lecturer_email')
+
+    if lecturer_email:
+        # Fetch student data based on the lecturer's email
+        cursor = db_conn.cursor()
+        select_students_sql = "SELECT * FROM students WHERE ucSuperEmail = %s"
+        cursor.execute(select_students_sql, (lecturer_email,))
+        student_data = cursor.fetchall()
+
         return render_template('lectDashboard.html', student_data=student_data)
     else:
-        print("Student data is empty.")
-        return render_template('lectDashboard.html', student_data=[])
-    return render_template('lectDashboard.html', student_data=student_data)
+        # Redirect to the login page if the lecturer is not authenticated
+        return redirect(url_for('login'))
 
 # ------------------------------------------------------------------- Lecturer END -------------------------------------------------------------------#
 
