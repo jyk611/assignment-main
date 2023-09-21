@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Job Flnder - Admin Register</title>
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/global.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='css/login_register.css')}}" rel="stylesheet" type="text/css" />
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/adminRegister.css' )}}">
+</head>
+
+
+<body>
+    <div class="row g-0">
+        <!-- Left Col Image -->
+        <div class="col-xl-6 d-none d-xl-block">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                alt="register form" class="img-fluid rounded-0"
+                style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+        </div>
+
+        <!-- Right Col Form -->
+        <div class="col-md-6 col-lg-6 d-flex">
+            <div class="card-body px-5 pt-4 text-black">
+
+                <!-- Form To Submit -->
+                <form method="POST" enctype="multipart/form-data" class=" mb-5 mt-5 needs-validation" novalidate>
+                    <div class="d-flex align-items-center mb-3 pb-1 pt-2">
+                        <i class="fa-solid fa-circle-user fa-3x text-danger me-4"></i>
+                        <span class="h1 fw-bold mb-0 text-danger">Admin Registration</span>
+                    </div>
+                    <h5 class="fw-normal mb-4">Please enter your details to register an admin account</h5>
+
+                    <!-- Admin Name Input -->
+                    <div class="mb-4 pb-1">
+                        <div class="form-outline">
+                            <input type="text" id="adminName" name="adminName" class="form-control form-control-lg" />
+                            <label class="form-label" for="adminName">Admin Full Name</label>
+                        </div>
+                    </div>
+
+                    <!-- Admin Email Input -->
+                    <div class="mb-4 pb-1">
+                        <div class="form-outline">
+                            <i class='fa-solid fa-envelope trailing text-danger'></i>
+                            <input type="text"
+                                class="form-control form-control-lg form-icon-trailing {% if adminEmail_error %}is-invalid{% endif %}"
+                                id="adminEmail" name="adminEmail" required>
+                            <label for="adminEmail" class="form-label">Admin Email</label>
+                            <div class="invalid-feedback">
+                                {% if adminEmail_error %}
+                                {{ adminEmail_error }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Admin Contact Input -->
+                    <div class="mb-4 pb-1">
+                        <div class="form-outline">
+                            <input type="text" id="adminContact" name="adminContact"
+                                class="form-control form-control-lg" />
+                            <label class="form-label" for="adminContact">Admin Contact</label>
+                        </div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="mb-4 pb-1">
+                        <div class="form-outline">
+                            <i class='fa-solid fa-eye-slash trailing text-danger toggle-password'
+                                data-target="password"></i>
+                            <input type="password" class="form-control form-control-lg form-icon-trailing" id="password"
+                                name="password" required>
+                            <label for="password" class="form-label">Password</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+
+                    <!-- Confirm Password Input -->
+                    <div class="mb-4 pb-1">
+                        <div class="form-outline">
+                            <i class='fa-solid fa-eye-slash trailing text-danger toggle-password'
+                                data-target="cPassword"></i>
+                            <input type="password" class="form-control form-control-lg form-icon-trailing"
+                                id="cPassword" name="cPassword" required>
+                            <label for="cPassword" class="form-label">Confirm Password</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="mt-4 mb-4">
+                        <button type="submit"
+                            class="btn btn-danger btn-rounded btn-lg btn-block"><b>Register</b></button>
+                    </div>
+
+                    <!-- Click to Login Page -->
+                    <div class="mb-4">
+                        <p>Already have an account?
+                            <a href="{{ url_for('login') }}" class="text-primary">
+                                Click here to login &#x2190;
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Links -->
+    <!-- jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Font Awesome -->
+    <script src="https://use.fontawesome.com/b2bae79a4d.js"></script>
+
+    <!-- AOS -->
+    <script src="https://unpkg.com/a
+
+    <!-- login register validation -->
+    <script type=" text/javascript" src="{{ url_for('static', filename='js/login_register.js')}}"></script>'
+</body>'

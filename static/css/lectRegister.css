@@ -1,0 +1,39 @@
+.login-bg {
+    background: #37517e;
+    /* background: linear-gradient(#37517e, white);
+    height: 10%; */
+}
+
+.register-bg {
+    background: #9A616D;
+}
+
+.img-fluid {
+    border-radius: 1rem 0 0 1rem;
+    object-fit: cover;
+    height: 100%;
+}
+
+.bx-log-in {
+    color: #37517e;
+}
+
+.bxs-user-circle {
+    color: #c0434e;
+}
+
+.trailing {
+    cursor: default;
+    pointer-events: auto !important;
+}
+
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+}
+
+.card-registration .select-arrow {
+    top: 13px;
+}

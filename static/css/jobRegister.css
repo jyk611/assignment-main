@@ -1,0 +1,110 @@
+/* Styles for the login form */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.jobRegister-container {
+    width: 100%;
+    overflow: hidden;
+    /* Clear the float */
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label,
+input,
+textarea {
+    display: block;
+    margin: 10px 0;
+    border-radius: 5px;
+    align-items: center;
+}
+
+button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.note {
+    width: 1000px;
+    height: 200px;
+    margin: 20px auto;
+    padding: 31px;
+    background-color: #d7d7bd;
+    border-radius: 5px;
+}
+
+ul.note-list {
+
+    text-align: left;
+    color: #2980b9;
+}
+
+ul.note-list li {
+    list-style-type: square;
+    margin-right: 10px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+}
+
+.radio-label input[type="radio"] {
+    margin-right: 10px;
+}
+
+.form-container {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    border-radius: 5px;
+
+}
+
+.side-by-side {
+    background-color: #dadad2;
+    float: left;
+    width: 50%;
+    /* Adjust the width as needed */
+    box-sizing: border-box;
+    /* Include padding and border in the width */
+    padding: 50px;
+    text-align: left;
+}
+
+.extralogo {
+    position: relative;
+}
+
+img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 25px;
+}
+
+.submit {
+    margin: 25px;
+    text-align: center;
+}

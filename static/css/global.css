@@ -1,0 +1,67 @@
+/*---- Global Style ----*/
+/* Apply To All Client Side Pages */
+body {
+    font-family: 'Jost', sans-serif;
+    letter-spacing: 1px;
+    color: #444444;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Change the boostrap text and btn color */
+.bg-primary {
+    background-color: #3b5998 !important;
+}
+
+.bg-danger {
+    background-color: #fb246a !important;
+}
+
+.btn-primary {
+    background-color: #3b5998;
+    transition: 0.3s;
+}
+
+.btn-danger {
+    background-color: #fb246a;
+    transition: 0.3s;
+}
+
+.btn-danger:hover {
+    background-color: #d0435a;
+}
+
+.text-danger {
+    color: #fb246a !important;
+}
+
+/* SignLearn Logo Design */
+.logo {
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.logo a {
+    color: white;
+}
+
+/* Every Page Title Design */
+.pg-title {
+    color: #266a8a;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 2%;
+    text-transform: uppercase;
+}
+
+/*Push the container to bottom so that TOPNAV wont block it*/
+.push-top {
+    margin-top: 5%;
+}

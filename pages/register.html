@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Job Flnder - Register</title>
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/global.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='css/login_register.css')}}" rel="stylesheet" type="text/css" />
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="row g-0">
+        <!-- Left Col Image -->
+        <div class="col-xl-6 d-none d-xl-block">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                alt="register form" class="img-fluid rounded-0"
+                style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+        </div>
+
+        <!-- Right Col Form -->
+        <div class="col-md-6 col-lg-6 d-flex">
+            <div class="card-body px-5 pt-4 text-black">
+
+                <!-- Form To Submit -->
+                <form method="POST" enctype="multipart/form-data" class=" mb-5 mt-5 needs-validation" novalidate>
+                    <div class="d-flex align-items-center mb-3 pb-1 pt-2">
+                        <i class="fa-solid fa-circle-user fa-3x text-danger me-4"></i>
+                        <span class="h1 fw-bold mb-0 text-danger">Register</span>
+                    </div>
+                    <h5 class="fw-normal mb-4">Please enter your details to register an account</h5>
+
+                    <!-- Name Input -->
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+
+                            <div class="form-outline">
+                                <input type="text" id="firstName" name="firstName"
+                                    class="form-control form-control-lg" />
+                                <label class="form-label" for="firstName">First Name</label>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 mb-4">
+
+                            <div class="form-outline">
+                                <input type="text" id="lastName" name="lastName" class="form-control form-control-lg" />
+                                <label class="form-label" for="lastName">Last Name (Optional)</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+
+                        <h6 class="mb-0 me-4">Gender: </h6>
+
+                        <div class="form-check form-check-inline mb-0 me-4">
+                            <input class="form-check-input" type="radio" name="gender" id="femaleGender"
+                                value="Female" />
+                            <label class="form-check-label" for="femaleGender">Female</label>
+                        </div>
+
+                        <div class="form-check form-check-inline mb-0 me-4">
+                            <input class="form-check-input" type="radio" name="gender" id="maleGender" value="Male" />
+                            <label class="form-check-label" for="maleGender">Male</label>
+                        </div>
+
+                        <div class="form-check form-check-inline mb-0">
+                            <input class="form-check-input" type="radio" name="gender" id="otherGender" value="Other" />
+                            <label class="form-check-label" for="otherGender">Other</label>
+                        </div>
+
+                    </div>
+
+                    <!-- Email Input -->
+                    <div class="mb-4 pb-1">
+                        <div class="form-outline">
+                            <i class='fa-solid fa-envelope trailing text-danger'></i>
+                            <input type="text"
+                                class="form-control form-control-lg form-icon-trailing {% if email_error %}is-invalid{% endif %}"
+                                id="email" name="email" required>
+                            <label for="email" class="form-label">Student Email</label>
+                            <div class="invalid-feedback">
+                                {% if email_error %}
+                                {{ email_error }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="mb-4 pb-1">
+                        <div class="form-outline">
+                            <i class='fa-solid fa-eye-slash trailing text-danger toggle-password'
+                                data-target="password"></i>
+                            <input type="password" class="form-control form-control-lg form-icon-trailing" id="password"
+                                name="password" required>
+                            <label for="password" class="form-label">Password</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+
+                    <!-- Confirm Pwd -->
+                    <div class="mb-4 pb-1">
+                        <div class="form-outline">
+                            <i class='fa-solid fa-eye-slash trailing text-danger toggle-password'
+                                data-target="cPassword"></i>
+                            <input type="password" class="form-control form-control-lg form-icon-trailing"
+                                id="cPassword" name="cPassword" required>
+                            <label for="cPassword" class="form-label">Confirmed Password</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" id="ic" name="ic"
+                            class="form-control form-control-lg {% if ic_error %}is-invalid{% endif %}" required />
+                        <label class="form-label" for="ic">MyKad</label>
+                        <div class="invalid-feedback">
+                            {% if ic_error %}
+                            {{ ic_error }}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Apply MDB custom-select class to the select element -->
+                    <div class="row">
+                        <div class="mb-4">
+                            <select id="programmeSelect" name="programmeSelect"
+                                class="custom-select form-control form-control-lg" required>
+                                <option value="" disabled selected>Select a Programme</option>
+                                <option value="Bachelor of Science (Honours) in Management Mathematics with Computing">
+                                    Bachelor of Science (Honours) in Management Mathematics with Computing
+                                </option>
+                                <option
+                                    value="Bachelor of Computer Science (Honours) in Interactive Software Technology">
+                                    Bachelor of Computer Science (Honours) in Interactive Software Technology
+                                </option>
+                                <option value="Bachelor of Computer Science (Honours) in Data Science">
+                                    Bachelor of Computer Science (Honours) in Data Science
+                                </option>
+                                <option
+                                    value="Bachelor of Information Systems (Honours) in Enterprise Information Systems">
+                                    Bachelor of Information Systems (Honours) in Enterprise Information Systems
+                                </option>
+                                <option value="Bachelor of Information Technology (Honours) in Software">
+                                    Bachelor of Information Technology (Honours) in Software Systems Development
+                                </option>
+                                <option value="Bachelor of Information Technology (Honours) in Information Security">
+                                    Bachelor of Information Technology (Honours) in Information Security
+                                </option>
+                                <option value="Bachelor of Information Technology (Honours) in Internet Technology">
+                                    Bachelor of Information Technology (Honours) in Internet Technology
+                                </option>
+                                <option value="Bachelor of Software Engineering (Honours)">
+                                    Bachelor of Software Engineering (Honours)
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <input type="number" id="tutorialGrp" name="tutorialGrp"
+                                    class="form-control form-control-lg" placeholder="e.g: 1 - 5" required
+                                    pattern="[0-9]+" />
+                                <label class="form-label" for="tutorialGrp">Tutorial Group</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <input type="text" id="studentID" name="studentID"
+                                    class="form-control form-control-lg {% if studentID_error %}is-invalid{% endif %}"
+                                    placeholder="e.g: 99WMR9999" required />
+                                <label class="form-label" for="studentID">Student ID</label>
+                                <div class="invalid-feedback">
+                                    {% if studentID_error %}
+                                    {{ studentID_error }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" id="cgpa" name="cgpa" class="form-control form-control-lg" required />
+                        <label class="form-label" for="cgpa">CGPA</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <select id="ucSupervisor" name="ucSupervisor"
+                                class="custom-select form-control form-control-lg" required>
+                                <option value="" disabled selected>Select UC Supervisor</option>
+                                {% for lecturer in list_of_lect %}
+                                <option value="{{ lecturer[0] ~ ', ' ~ lecturer[1] }}">
+                                    {{ lecturer[0] }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <input type="text" id="ucSupervisorEmail" name="ucSupervisorEmail"
+                                    class="form-control form-control-lg" />
+                                <label class="form-label" for="ucSupervisorEmail">UC Supervisor
+                                    Email</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Btn -->
+                    <div class="mt-4 mb-4">
+                        <button type="submit" class="btn btn-danger btn-rounded btn-lg btn-block"><b>Next</b></button>
+                    </div>
+
+                    <!-- Click to Login Page -->
+                    <div class="mb-4">
+                        <p>Already have an account?
+                            <a href="{{ url_for('login') }}" class="text-primary">
+                                Click here to login &#x2190;
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Links -->
+    <!-- jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Font Awesome -->
+    <script src="https://use.fontawesome.com/b2bae79a4d.js"></script>
+
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
+
+    <!-- login register validation -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/login_register.js')}}"></script>
+
+</html>
