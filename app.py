@@ -551,7 +551,7 @@ def lectRegister():
 @app.route("/lectDashboard", methods=['GET'])
 def lectDashboard():
 
-return render_template('lectDashboard.html', student_data=student_data)
+    return render_template('lectDashboard.html', student_data=student_data)
 
 # ------------------------------------------------------------------- Lecturer END -------------------------------------------------------------------#
 
