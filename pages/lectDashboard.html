@@ -88,14 +88,14 @@
                            <!-- Debugging statement to check if data is present -->
                            <p>Data is present:</p>
                      
-                           {% for student in student_data %}
+                           {% for students in student_data %}
                               <div class="report-item">
-                                 <p class="t-op">{{ student.studentID }}</p>
-                                 <p class="t-op">{{ student.firstName }}</p>
-                                 <p class="t-op">{{ student.lastName }}</p>
-                                 <p class="t-op">{{ student.stud_email }}</p>
-                                 <p class="t-op">{{ student.programme }}</p>
-                                 <p class="t-op">{{ student.tutGroup }}</p>
+                                <p class="t-op">{{ studentsstudentID }}</p>
+                                <p class="t-op">{{ students.firstName }}</p>
+                                <p class="t-op">{{ students.lastName }}</p>
+                                <p class="t-op">{{ students.stud_email }}</p>
+                                <p class="t-op">{{ students.programme }}</p>
+                                <p class="t-op">{{ students.tutGroup }}</p>
                               </div>
                            {% endfor %}
                         {% else %}
