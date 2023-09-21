@@ -220,7 +220,7 @@ def login():
 
                 if password == stored_password:
                     # Passwords match, user is authenticated
-                    return render_template('index.html', user_login_name=name, user_authenticated=True)
+                    return render_template('index.html', user_login_name=name, studentID=None, user_authenticated=True)
                 else:
                     return render_template('login.html', pwd_error="Incorrect password. Please try again.")
             else:
@@ -235,11 +235,20 @@ def login():
             if data:
                 # Data is found in the database
                 stored_password = data[1]
-                name = data[2]
+                lecturer_id = data[2]
 
                 if password == stored_password:
                     # Passwords match, user is authenticated
-                    return render_template('lectDashboard.html', user_login_name=name, user_authenticated=True)
+                    # Fetch student data for this lecturer
+                    select_students_sql = "SELECT * \
+                                        FROM students s\
+                                        JOIN lecturer l on s.ucSuperEmail = l.lectEmail \
+                                        WHERE l.lectEmail = %s"
+                    cursor.execute(select_students_sql, (email,))
+                    student_data = cursor.fetchall()
+                    
+                    print(student_data)
+                    return render_template('lectDashboard.html', lectID=lecturer_id, student_data=student_data, user_authenticated=True)
                 else:
                     return render_template('login.html', pwd_error="Incorrect password. Please try again.")
             else:
@@ -541,23 +550,8 @@ def lectRegister():
 
 @app.route("/lectDashboard", methods=['GET'])
 def lectDashboard():
-    # Retrieve the lecturer's email from the session
-    lecturer_email = request.args.get('lectEmail')
 
-    if lecturer_email:
-        # Fetch student data based on the lecturer's email
-        cursor = db_conn.cursor()
-        select_students_sql = "SELECT * \
-                                FROM students s\
-                                JOIN lecturer l on s.ucSuperEmail = l.lectEmail \
-                                WHERE l.lectEmail = %s"
-        cursor.execute(select_students_sql, (lecturer_email,))
-        student_data = cursor.fetchall()
-
-        return render_template('lectDashboard.html', student_data=student_data)
-    else:
-        # Redirect to the login page if the lecturer is not authenticated
-        return redirect(url_for('login'))
+return render_template('lectDashboard.html', student_data=student_data)
 
 # ------------------------------------------------------------------- Lecturer END -------------------------------------------------------------------#
 
