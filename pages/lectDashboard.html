@@ -45,15 +45,23 @@
 					<div class="nav-option option1">
 						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
 							class="nav-img" alt="dashboard">
-						<h3><a style="color: white;" href="lectDashboard.html">Dashboard</a></h3>
-						<!--<h3><a style="color: white;" href="{{ url_for('lectDashboard') }}">Dashboard</a></h3>-->
+						<!--<h3><a style="color: white;" href="lectDashboard.html">Dashboard</a></h3>-->
+						<h3><a style="color: white;" href="{{ url_for('lectDashboard') }}">Dashboard</a></h3>
 
 					</div>
 
 					<div class="option2 nav-option">
 						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"
 							class="nav-img" alt="articles">
-						<h3><a href="lectViewReport.html">View Report</a></h3>
+						<!--<h3><a href="lectViewReport.html">View Report</a></h3>-->
+						<h3><a href="{{ url_for('lectViewReport') }}">Dashboard</a></h3>
+					</div>
+
+					<div class="option3 nav-option">
+						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"
+							class="nav-img" alt="articles">
+						<!--<h3><a href="lectViewForm.html">View Form</a></h3>-->
+						<h3><a href="{{ url_for('lectViewForm') }}">Dashboard</a></h3>
 					</div>
 
 					<div class="nav-option logout">
@@ -108,10 +116,8 @@
 			</div>
 		</div>
 	</div>
-	<!--<script src="./lectDashboard-index.js"></script>-->
-
     <script src="{{ url_for('static', filename='js/lectDashboard-index.js') }}"></script>
-
+	<!--<script src="./lectDashboard-index.js"></script>-->
 </body>
 
 </html>

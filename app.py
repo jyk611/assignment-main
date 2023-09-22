@@ -553,6 +553,16 @@ def lectDashboard():
 
     return render_template('lectDashboard.html', student_data=student_data)
 
+@app.route("/lectViewReport", methods=['GET'])
+def lectViewReport():
+
+    return render_template('lectViewReport.html', student_data=student_data)
+
+@app.route("/lectViewForm", methods=['GET'])
+def lectViewForm():
+
+    return render_template('lectViewForm.html', student_data=student_data)
+
 # ------------------------------------------------------------------- Lecturer END -------------------------------------------------------------------#
 
 # ------------------------------------------------------------------- Company START (Wong Kar Yan) -------------------------------------------------------------------#
