@@ -478,8 +478,9 @@ def deleteJob():
     studentID = request.form.get('studentID')
     jobID = request.form.get('jobID')
 
-    delete_sql = "DELETE FROM studentJobApply WHERE studentID = %s AND job_id = %s"
     print(studentID, jobID)
+    delete_sql = "DELETE FROM studentJobApply WHERE studentID = %s AND job_id = %s"
+
     try:
         cursor = db_conn.cursor()
         cursor.execute(delete_sql, (studentID, jobID))
@@ -503,9 +504,6 @@ def deleteJob():
             cursor.execute(select_count_sql, (studID))
             studDataCtr = cursor.fetchall() 
             studDataCtr = studDataCtr[0]
-
-            db_conn.commit()
-            cursor.close()
         except Exception as e:
             return str(e)
 
@@ -748,7 +746,6 @@ def list_files(bucket, path):
     for object_summary in bucket.objects.filter(Prefix=folder_prefix):
         # Extract file name without the folder prefix
         file_name = object_summary.key[len(folder_prefix):]
-        print(file_name)
         if file_name:
             last_modified = object_summary.last_modified
             size = object_summary.size
@@ -825,10 +822,9 @@ def report():
 @app.route("/delete", methods=['POST'])
 def delete_file():
     if request.method == 'POST':
-        studID = session.get('studID', None)
+        studID = request.form['studentID']
         # Get the file key to delete from the form data
         file_key = request.form['file_name']
-        print(file_key)
 
         # Fetch data from the lecturer database
         cursor = db_conn.cursor()
@@ -841,8 +837,7 @@ def delete_file():
 
         lecturerID = data[0]
 
-        lect_file_key = 'Lecturer/' + lecturerID + "/" + studID + "/Report/" + file_key
-
+        lect_file_key = 'Lecturer/' + lecturerID + "/" + studID + "/" + file_key
 
         # Delete the file from S3
         try:
@@ -879,7 +874,6 @@ def getStudFiles(lecturerID, studentID, type):
     for object_summary in bucket.objects.filter(Prefix=folder_prefix):
         # Extract file name without the folder prefix
         file_name = object_summary.key[len(folder_prefix):]
-        print(file_name)
         if file_name:
             last_modified = object_summary.last_modified
             size = object_summary.size

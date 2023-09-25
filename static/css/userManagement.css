@@ -1,0 +1,37 @@
+/* User List styles */
+.user-list .user {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.user-list .user h2 {
+    font-size: 20px;
+}
+
+.user-list .user p {
+    margin-top: 10px;
+}
+
+.user-list .user button {
+    padding: 5px 10px;
+    margin-top: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-button {
+    padding: 5px 10px;
+    margin-top: 10px;
+    background-color: #ff0000; /* Red color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

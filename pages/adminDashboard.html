@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,
+				initial-scale=1.0">
+	<title>Job Flnder</title>
+	<link rel="stylesheet" href="../static/css/dashboard-style.css">
+	<link rel="stylesheet" href="../static/css/dashbaord-responsive.css">
+	<link rel="stylesheet" href="../static/css/adminDashboard.css">
+
+	<style>
+		.flex-container {
+			display: flex;
+			/* Use Flexbox layout */
+			align-items: center;
+			/* Vertically center the content */
+		}
+
+		/* Adjust margin or spacing as needed */
+		.nav-img {
+			margin-right: 10px;
+			/* Add some spacing between the image and text */
+		}
+	</style>
+</head>
+
+<body>
+
+	<!-- for header part -->
+	<header>
+
+		<div class="logo" style="margin-top:15px;">
+			<a href="{{ url_for('admin_dashboard') }}"><img src="{{ url_for('static', filename='img/logo/logo.png') }}"
+					alt=""></a>
+		</div>
+
+		<div class="message">
+			<div class="circle"></div>
+			<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png" class="icn" alt="">
+			<div class="dp">
+				<a href="javascript:void(0);" class="user-link" onclick="submitStudentIDdp('{{ studentID }}')">
+					<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+						class="dpicn" alt="dp">
+				</a>
+			</div>
+		</div>
+
+	</header>
+
+	<div class="main-container">
+		<div class="navcontainer">
+			<nav class="nav">
+				<div class="nav-upper-options">
+					<div class="nav-option option1">
+						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
+							class="nav-img" alt="dashboard">
+						<h3><a style="color: white;" href="{{ url_for('admin_dashboard') }}">Dashboard</a></h3>
+					</div>
+
+					<div class="option2 nav-option">
+						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183320/5.png"
+							class="nav-img" alt="approve">
+						<h3><a href="{{ url_for('approve_companies') }}">Approve Registered Companies</a></h3>
+					</div>
+
+					<div class="nav-option option3">
+						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"
+							class="nav-img" alt="list">
+						<h3><a href="{{ url_for('list_companies') }}">List of Approved Companies</a></h3>
+					</div>
+
+					<div class="nav-option option4">
+						<img src="../static/img/user-management-icon.png" class="nav-img" alt="user-management">
+						<h3><a href="{{ url_for('user_management') }}">Student Management</a></h3>
+					</div>
+
+					<div class="nav-option option4">
+						<img src="../static/img/user-management-icon.png" class="nav-img" alt="user-management">
+						<h3><a href="{{ url_for('lecturerManagement') }}">Lecturer Management</a></h3>
+					</div>
+
+					<div class="nav-option logout">
+						<a href="{{ url_for('logout') }}">
+							<div class="flex-container">
+								<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+									class="nav-img" alt="logout">
+								<h3 style="margin-left: 15px">Logout</h3>
+							</div>
+						</a>
+					</div>
+				</div>
+			</nav>
+		</div>
+
+		<div class="main">
+			<div class="box-container">
+
+				<div class="box box1">
+					<div class="text">
+						<h2 class="topic-heading">{{ registeredComp }}</h2>
+						<h2 class="topic">Registered Companies</h2>
+					</div>
+
+					<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(31).png"
+						alt="Views">
+				</div>
+
+				<div class="box box2">
+					<div class="text">
+						<h2 class="topic-heading">{{ pendingCtr }}</h2>
+						<h2 class="topic">Pending Approval</h2>
+					</div>
+
+					<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210185030/14.png" alt="likes">
+				</div>
+
+				<div class="box box3">
+					<div class="text">
+						<h2 class="topic-heading">{{ rejectedCtr }}</h2>
+						<h2 class="topic">Rejected Companies</h2>
+					</div>
+
+					<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(32).png"
+						alt="comments">
+				</div>
+
+			</div>
+
+			<div class="report-container">
+				<div class="report-header">
+					<h1 class="recent-Articles">Companies List</h1>
+				</div>
+
+				<div class="report-body">
+					<div class="report-topic-heading">
+						<h3 class="t-op">Company ID</h3>
+						<h3 class="t-op">Company Name</h3>
+						<h3 class="t-op">Status</h3>
+					</div>
+
+					<div class="report-items">
+						{% if companies %}
+						{% for company in companies %}
+						<div class="report-item">
+							<p class="t-op">{{ company[0] }}</p>
+							<p class="t-op">{{ company[1] }}</p>
+							<p class="t-op">{{ company[3] }}</p>
+						</div>
+						{% endfor %}
+						{% else %}
+						<p>No data available.</p>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="../static/js/dashboard-index.js"></script>
+</body>
+
+</html>

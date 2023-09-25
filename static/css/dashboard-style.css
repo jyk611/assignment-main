@@ -170,6 +170,12 @@ flex-wrap: wrap;
 gap: 50px;
 margin-bottom: 50px;
 }
+
+.hero__caption{
+    text-size-adjust:50px;
+    color: #ededed;
+}
+
 .nav {
 min-height: 91vh;
 background-color: var(--background-color2);
@@ -318,8 +324,7 @@ max-width: 1160px;
 overflow-x: auto;
 padding: 20px;
 }
-.report-topic-heading,
-.item1 {
+.report-topic-heading {
 width: 1120px;
 display: flex;
 justify-content: space-between;
@@ -329,11 +334,12 @@ align-items: center;
 font-size: 18px;
 letter-spacing: 0px;
 }
-
-.items {
+.t-op2 {
 width: 1120px;
-margin-top: 15px;
+font-size: 22px;
+letter-spacing: 0px;
 }
+
 
 .item1 {
 margin-top: 20px;

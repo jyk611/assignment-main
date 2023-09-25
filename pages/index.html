@@ -52,6 +52,26 @@
             border-bottom: 0;
             padding: 29.5px 44px;
         }
+
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            cursor: inherit;
+            display: block;
+        }
     </style>
 </head>
 
@@ -89,8 +109,6 @@
                                         <ul id="navigation">
                                             <li><a href="{{ url_for('index') }}">Home</a></li>
                                             <li><a href="{{ url_for('job_listing') }}">Find a Job</a></li>
-                                            <li><a href="{{ url_for('about') }}">About</a></li>
-                                            <li><a href="{{ url_for('contact') }}">Contact</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -339,33 +357,41 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-10">
                         <!-- Loop through the image filenames -->
-                        {% for image_file in image_files %}
-                        <!-- single-job-content -->
-                        <div class="single-job-items mb-30">
-                            <div class="job-items">
-                                <div class="company-img">
-                                    <a href="{{ url_for('job_details') }}">
-                                        <img src="{{ my_bucket.meta.client.generate_presigned_url('get_object', Params={'Bucket': my_bucket.name, 'Key': 'Company/' + image_file}) }}"
-                                            alt="{{ image_file }}">
-                                    </a>
+                        {% for data in comp_data %}
+                        {% if loop.index <= 5 %} <!-- single-job-content -->
+                            <div class="single-job-items mb-30">
+                                <div class="job-items">
+                                    <div class="company-img">
+                                        <a href="#">
+                                            <img src="{{ data[1] }}" alt="{{ data[1] }}">
+                                        </a>
+                                    </div>
+                                    <div class="job-tittle">
+                                        <a href="#">
+                                            <h4>{{ data[2] }}</h4>
+                                        </a>
+                                        <ul>
+                                            <li>{{ data[0] }}</li>
+                                            <li><i class="fas fa-map-marker-alt"></i>{{ data[3] }}</li>
+                                            <li>{{ data[4] }}</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="job-tittle">
-                                    <a href="{{ url_for('job_details') }}">
-                                        <h4>Digital Marketer</h4>
-                                    </a>
-                                    <ul>
-                                        <li>Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        <li>$3500 - $4000</li>
-                                    </ul>
-                                </div>
+                                <form id="fileForm" method="POST" action="/upload" enctype="multipart/form-data"
+                                    class="file-form">
+                                    <div class="items-link f-right">
+                                        <label class="btn btn-primary btn-file"
+                                            style="background-color:white; border: 2px solid #007bff; padding: 0px 40px; cursor: pointer;">
+                                            <p style="padding-top: 10px">Apply</p>
+                                            <input id="file-input-{{ data[5] }}" type="file" name="cv"
+                                                style="display: none;" data-jobid="{{ data[5] }}">
+                                        </label>
+                                    </div>
+                                    <input type="hidden" name="jobID" id="jobID" value="{{ data[5] }}">
+                                </form>
                             </div>
-                            <div class="items-link f-right">
-                                <a href="{{ url_for('job_details') }}">Full Time</a>
-                                <span>7 hours ago</span>
-                            </div>
-                        </div>
-                        {% endfor %}
+                            {% endif %}
+                            {% endfor %}
                     </div>
                 </div>
             </div>
@@ -425,80 +451,7 @@
                 </div>
             </div>
         </div>
-        <!-- How  Apply Process End-->
-        <!-- Testimonial Start -->
-        <div class="testimonial-area testimonial-padding">
-            <div class="container">
-                <!-- Testimonial contents -->
-                <div class="row d-flex justify-content-center">
-                    <div class="col-xl-8 col-lg-8 col-md-10">
-                        <div class="h1-testimonial-active dot-style">
-                            <!-- Single Testimonial -->
-                            <div class="testimonial-caption">
-                                <!-- Loop through the image filenames -->
-                                <div class="single-testimonial text-center">
-                                    <!-- Testimonial Content -->
-                                    <div class="testimonial-founder">
-                                        <div class="founder-img mb-30">
-                                            <!-- Set the src attribute to the URL of the S3 object -->
-                                            <img src="#" alt="#">
-                                            <span>Margaret Lawson</span>
-                                            <p>Creative Director</p>
-                                        </div>
-                                    </div>
-                                    <div class="testimonial-top-cap">
-                                        <p>“I am at an age where I just want to be fit and healthy our bodies are our
-                                            responsibility! So start caring for your body and it will care for you. Eat
-                                            clean it will care for you and workout hard.”</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single Testimonial -->
-                            <div class="single-testimonial text-center">
-                                <!-- Testimonial Content -->
-                                <div class="testimonial-caption ">
-                                    <!-- founder -->
-                                    <div class="testimonial-founder  ">
-                                        <div class="founder-img mb-30">
-                                            <img src="{{ url_for('static', filename='img/testmonial/testimonial-founder.png')}}"
-                                                alt="">
-                                            <span>Margaret Lawson</span>
-                                            <p>Creative Director</p>
-                                        </div>
-                                    </div>
-                                    <div class="testimonial-top-cap">
-                                        <p>“I am at an age where I just want to be fit and healthy our bodies are our
-                                            responsibility! So start caring for your body and it will care for you. Eat
-                                            clean it will care for you and workout hard.”</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single Testimonial -->
-                            <div class="single-testimonial text-center">
-                                <!-- Testimonial Content -->
-                                <div class="testimonial-caption ">
-                                    <!-- founder -->
-                                    <div class="testimonial-founder  ">
-                                        <div class="founder-img mb-30">
-                                            <img src="{{ url_for('static', filename='img/testmonial/testimonial-founder.png')}}"
-                                                alt="">
-                                            <span>Margaret Lawson</span>
-                                            <p>Creative Director</p>
-                                        </div>
-                                    </div>
-                                    <div class="testimonial-top-cap">
-                                        <p>“I am at an age where I just want to be fit and healthy our bodies are our
-                                            responsibility! So start caring for your body and it will care for you. Eat
-                                            clean it will care for you and workout hard.”</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Testimonial End -->
+
         <!-- Support Company Start-->
         <div class="support-company-area support-padding fix">
             <div class="container">
@@ -723,6 +676,34 @@
             // Submit the form
             document.getElementById('studentIDForm').submit();
         }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const fileForms = document.querySelectorAll(".file-form");
+
+            fileForms.forEach((fileForm) => {
+                const fileInput = fileForm.querySelector("input[type='file']");
+                const jobIDInput = fileForm.querySelector("input[name='jobID']");
+
+                fileInput.addEventListener("change", function () {
+                    // Get the selected file's name
+                    const fileName = fileInput.files[0].name;
+
+                    // Get the job ID from the data attribute
+                    const jobID = fileInput.getAttribute("data-jobid");
+
+                    // Set the job ID in the hidden input field
+                    jobIDInput.value = jobID;
+
+                    // Display the file name (you can customize this)
+                    alert("Selected file: " + fileName);
+
+                    // Submit the form programmatically
+                    fileForm.submit();
+                });
+            });
+        });
     </script>
 
 </body>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,
+				initial-scale=1.0">
+    <title>JOB FINDER</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard-responsive.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jobRegister.css') }}">
+
+    <style>
+        .detail-content {
+            border: 2px solid rgb(34, 93, 163);
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .detail-content:hover {
+            background-color: rgb(203, 228, 229);
+        }
+
+        .edit-img {
+            width: 15px;
+            height: 15px;
+        }
+
+        .logo{
+            align-items: center;
+            border-radius: 8px;
+        }
+
+        .flex-container {
+            display: flex;
+            /* Use Flexbox layout */
+            align-items: center;
+            /* Vertically center the content */
+        }
+
+        /* Adjust margin or spacing as needed */
+        .nav-img {
+            margin-right: 10px;
+            align-items: center;
+            /* Add some spacing between the image and text */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- for header part -->
+    <header>
+
+        <div class="logo" style="margin-top:15px;">
+            <a href="{{ url_for('companyDashboard') }}"><img src="{{ url_for('static', filename='img/logo/logo.png') }}"
+                    alt=""></a>
+        </div>
+
+        <div class="message">
+            <div class="circle"></div>
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png" class="icn" alt="">
+            <div class="dp">
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+                    class="dpicn" alt="dp">
+            </div>
+        </div>
+
+    </header>
+
+    <div class="main-container">
+        <div class="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+                    <div class="nav-option option1">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
+                            class="nav-img" alt="dashboard">
+                        <h3><a style="color: white;" href="{{ url_for('companyDashboard')}}">Dashboard</a></h3>
+                    </div>
+
+                    <div class="nav-option option2 ">
+                        <img src="{{ url_for('static', filename='img/icon/jobApplicationicon.png') }}" class="nav-img"
+                            alt="dashboard">
+                        <h3><a href="{{ url_for('jobReg')}}">Job Application</a></h3>
+                    </div>
+
+                    <div class="nav-option logout">
+                        <a href="{{ url_for('logout') }}">
+                            <div class="flex-container">
+                                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+                                    class="nav-img" alt="logout">
+                                <h3 style="margin-left: 15px">Logout</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="main">
+            <div class="report-container">
+                <div class="report-header">
+                    <h1 class="recent-Articles">Job Details</h1>
+                </div>
+
+                <div class="report-body">
+
+                    <div class="detail-container">
+                        <img src="{{ comp_img }}" alt="Company Image" class="logo"><br>
+                        {% for job in job_data %}
+                        <div class="detail-content">
+                            <p>Job id: {{ job[0] }}</p>
+                        </div>
+                        <div class="detail-content">
+                            <img src="{{ url_for('static', filename='img/icon/edit.png') }}" class="edit-img"
+                                alt="edit icon" id="job_title">
+                            <p>Job Title: {{ job[2] }}</p>
+
+                            <!-- Edit form initially hidden -->
+                            <form id="editForm1" method="post" action="{{ url_for('edit_job', job_id=job[0]) }}"
+                                style="display: none;">
+                                <!-- Editable fields -->
+                                <label for="updated_value">Job Title:</label>
+                                <input type="text" id="updated_value" name="updated_value" value="{{ job[2] }}"
+                                    required>
+
+                                <!-- Add a hidden input field to specify the column being updated -->
+                                <input type="hidden" name="column" value="job_title">
+
+                                <button type="submit">Submit</button>
+                            </form>
+                        </div>
+                        <div class="detail-content">
+                            <img src="{{ url_for('static', filename='img/icon/edit.png') }}" class="edit-img"
+                                alt="edit icon" id="job_desc">
+                            <p>Job description: </p><br>
+                            {% for point in job[3] %}
+                            {% if point.strip() %}
+                            <li>{{ point }}</li>
+                            {% endif %}
+                            {% endfor %}
+
+                            <!-- Edit form initially hidden -->
+                            <form id="editForm2" method="post" action="{{ url_for('edit_job', job_id=job[0]) }}"
+                                style="display: none;">
+                                <!-- Editable fields -->
+                                <label for="updated_value">Job description:</label>
+                                <textarea id="updated_value" name="updated_value" rows="4" cols="50" style="padding: 4px;"
+                                placeholder="Please type here..." required></textarea>
+                                <!-- Add a hidden input field to specify the column being updated -->
+                                <input type="hidden" name="column" value="job_desc">
+
+                                <button type="submit">Submit</button>
+                            </form>
+                        </div>
+                        <div class="detail-content">
+                            <img src="{{ url_for('static', filename='img/icon/edit.png') }}" class="edit-img"
+                                alt="edit icon" id="job_req">
+                            <p>Job requirement: </p><br>
+                            {% for point in job[4] %}
+                            {% if point.strip() %}
+                            <li>{{ point }}</li>
+                            {% endif %}
+                            {% endfor %}
+
+                            <!-- Edit form initially hidden -->
+                            <form id="editForm3" method="post" action="{{ url_for('edit_job', job_id=job[0]) }}"
+                                style="display: none;">
+                                <!-- Editable fields -->
+                                <label for="updated_value">Job requirement:</label>
+                                <textarea id="updated_value" name="updated_value" rows="4" cols="50" style="padding: 4px;"
+                                placeholder="Please type here..." required></textarea>
+
+                                <!-- Add a hidden input field to specify the column being updated -->
+                                <input type="hidden" name="column" value="job_req">
+
+                                <button type="submit">Submit</button>
+                            </form>
+                        </div>
+                        <div class="detail-content">
+                            <img src="{{ url_for('static', filename='img/icon/edit.png') }}" class="edit-img"
+                                alt="edit icon" id="sal_range">
+                            <p>Salary range: {{ job[5] }}</p>
+
+                            <!-- Edit form initially hidden -->
+                            <form id="editForm4" method="post" action="{{ url_for('edit_job', job_id=job[0]) }}"
+                                style="display: none;">
+                                <!-- Editable fields -->
+                                <label for="updated_value">Salary range:</label>
+                                <input type="text" id="updated_value" name="updated_value" value="{{ job[5] }}"
+                                    required>
+
+                                <!-- Add a hidden input field to specify the column being updated -->
+                                <input type="hidden" name="column" value="sal_range">
+
+                                <button type="submit">Submit</button>
+                            </form>
+                        </div>
+                        <div class="detail-content">
+                            <img src="{{ url_for('static', filename='img/icon/edit.png') }}" class="edit-img"
+                                alt="edit icon" id="contact_person_name">
+                            <p>Contact person name: {{ job[6] }}</p>
+
+                            <!-- Edit form initially hidden -->
+                            <form id="editForm5" method="post" action="{{ url_for('edit_job', job_id=job[0]) }}"
+                                style="display: none;">
+                                <!-- Editable fields -->
+                                <label for="updated_value">Contact person name:</label>
+                                <input type="text" id="updated_value" name="updated_value" value="{{ job[6] }}"
+                                    required>
+
+                                <!-- Add a hidden input field to specify the column being updated -->
+                                <input type="hidden" name="column" value="contact_person_name">
+
+                                <button type="submit">Submit</button>
+                            </form>
+                        </div>
+                        <div class="detail-content">
+                            <img src="{{ url_for('static', filename='img/icon/edit.png') }}" class="edit-img"
+                                alt="edit icon" id="contact_person_email">
+                            <p>Contact person email: {{ job[7] }}</p>
+
+                            <!-- Edit form initially hidden -->
+                            <form id="editForm6" method="post" action="{{ url_for('edit_job', job_id=job[0]) }}"
+                                style="display: none;">
+                                <!-- Editable fields -->
+                                <label for="updated_value">Contact person email:</label>
+                                <input type="text" id="updated_value" name="updated_value" value="{{ job[7] }}"
+                                    required>
+
+                                <!-- Add a hidden input field to specify the column being updated -->
+                                <input type="hidden" name="column" value="contact_person_email">
+
+                                <button type="submit">Submit</button>
+                            </form>
+                        </div>
+                        <div class="detail-content">
+                            <img src="{{ url_for('static', filename='img/icon/edit.png') }}" class="edit-img"
+                                alt="edit icon" id="contact_number">
+                            <p>Contact number: {{ job[8] }}</p>
+
+                            <!-- Edit form initially hidden -->
+                            <form id="editForm7" method="post" action="{{ url_for('edit_job', job_id=job[0]) }}"
+                                style="display: none;">
+                                <!-- Editable fields -->
+                                <label for="updated_value">Contact number:</label>
+                                <input type="text" id="updated_value" name="updated_value" value="{{ job[8] }}"
+                                    required>
+
+                                <!-- Add a hidden input field to specify the column being updated -->
+                                <input type="hidden" name="column" value="contact_number">
+
+                                <button type="submit">Submit</button>
+                            </form>
+                        </div>
+                        <div class="detail-content">
+                            <img src="{{ url_for('static', filename='img/icon/edit.png') }}" class="edit-img"
+                                alt="edit icon" id="comp_state">
+                            <p>Company state: {{ job[9] }}</p>
+
+                            <!-- Edit form initially hidden -->
+                            <form id="editForm8" method="post" action="{{ url_for('edit_job', job_id=job[0]) }}"
+                                style="display: none;">
+                                <!-- Editable fields -->
+                                <label for="updated_value">Company state:</label>
+                                <input type="text" id="updated_value" name="updated_value" value="{{ job[9] }}"
+                                    required>
+
+                                <!-- Add a hidden input field to specify the column being updated -->
+                                <input type="hidden" name="column" value="comp_state">
+
+                                <button type="submit">Submit</button>
+                            </form>
+                        </div>
+                        <div>
+                            <button class="delete-button" data-job-id="{{ job[0] }}"
+                                style="background-color: rgb(72, 82, 145); color: white;"><b>Delete</b></button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard-index.js') }}"></script>
+
+    <!-- login register validation -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/company.js')}}"></script>
+
+    <script>
+        document.getElementById('job_title').addEventListener('click', function () {
+            // Toggle the visibility of the edit form
+            var editForm = document.getElementById('editForm1');
+            if (editForm.style.display === 'none' || editForm.style.display === '') {
+                editForm.style.display = 'block';
+            } else {
+                editForm.style.display = 'none';
+            }
+        });
+
+        document.getElementById('job_desc').addEventListener('click', function () {
+            // Toggle the visibility of the edit form
+            var editForm = document.getElementById('editForm2');
+            if (editForm.style.display === 'none' || editForm.style.display === '') {
+                editForm.style.display = 'block';
+            } else {
+                editForm.style.display = 'none';
+            }
+        });
+
+        document.getElementById('job_req').addEventListener('click', function () {
+            // Toggle the visibility of the edit form
+            var editForm = document.getElementById('editForm3');
+            if (editForm.style.display === 'none' || editForm.style.display === '') {
+                editForm.style.display = 'block';
+            } else {
+                editForm.style.display = 'none';
+            }
+        });
+
+        document.getElementById('sal_range').addEventListener('click', function () {
+            // Toggle the visibility of the edit form
+            var editForm = document.getElementById('editForm4');
+            if (editForm.style.display === 'none' || editForm.style.display === '') {
+                editForm.style.display = 'block';
+            } else {
+                editForm.style.display = 'none';
+            }
+        });
+
+        document.getElementById('contact_person_name').addEventListener('click', function () {
+            // Toggle the visibility of the edit form
+            var editForm = document.getElementById('editForm5');
+            if (editForm.style.display === 'none' || editForm.style.display === '') {
+                editForm.style.display = 'block';
+            } else {
+                editForm.style.display = 'none';
+            }
+        });
+
+        document.getElementById('contact_person_email').addEventListener('click', function () {
+            // Toggle the visibility of the edit form
+            var editForm = document.getElementById('editForm6');
+            if (editForm.style.display === 'none' || editForm.style.display === '') {
+                editForm.style.display = 'block';
+            } else {
+                editForm.style.display = 'none';
+            }
+        });
+
+        document.getElementById('contact_number').addEventListener('click', function () {
+            // Toggle the visibility of the edit form
+            var editForm = document.getElementById('editForm7');
+            if (editForm.style.display === 'none' || editForm.style.display === '') {
+                editForm.style.display = 'block';
+            } else {
+                editForm.style.display = 'none';
+            }
+        });
+
+        document.getElementById('comp_state').addEventListener('click', function () {
+            // Toggle the visibility of the edit form
+            var editForm = document.getElementById('editForm8');
+            if (editForm.style.display === 'none' || editForm.style.display === '') {
+                editForm.style.display = 'block';
+            } else {
+                editForm.style.display = 'none';
+            }
+        });
+    </script>
+
+    <script>
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const deleteButton = document.querySelectorAll('.delete-button');
+
+        deleteButton.addEventListener('click', function () {
+            redirect(url_for('delete_job', job_id = job[0]))
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Add an event listener to all elements with the class 'delete-button'
+            const deleteButtons = document.querySelectorAll('.delete-button');
+
+            deleteButtons.forEach(function (button) {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault(); // Prevent the default behavior of the button
+
+                    // Get the job ID from a data attribute, e.g., data-job-id="J10001"
+                    const jobID = button.getAttribute('data-job-id');
+
+                    // Send a POST request to the delete endpoint
+                    fetch(`/delete_job/${jobID}`, {
+                        method: 'POST',
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                // Job deleted successfully, you can handle this case here
+                                console.log('Job deleted successfully.');
+                                window.alert('Job deleted successfully.'); // Display a pop-up alert
+                                // Optionally, you can remove the deleted job from the page
+                                button.closest('.job-listing').remove();
+                            } else {
+                                // Handle errors, e.g., job not found or server error
+                                console.error('Failed to delete job.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html

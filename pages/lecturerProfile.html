@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,
+				initial-scale=1.0">
+    <title>GeeksForGeeks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard-responsive.css') }}">
+
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <style>
+        h3 {
+            display: flex;
+            font-size: 15px;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: bold;
+        }
+
+        /* Remove border from input type="text" */
+        input[type="text"] {
+            border: none;
+        }
+
+        /* Change background color to white when input is disabled */
+        input[type="text"]:disabled {
+            background-color: white;
+        }
+
+        #saveButton {
+            display: none;
+        }
+
+        #saveStudentButton {
+            display: none;
+        }
+
+        .flex-container {
+            display: flex;
+            /* Use Flexbox layout */
+            align-items: center;
+            /* Vertically center the content */
+        }
+
+        /* Adjust margin or spacing as needed */
+        .nav-img {
+            margin-right: 10px;
+            /* Add some spacing between the image and text */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- for header part -->
+    <header>
+        <div class="logo" style="margin-top:15px;">
+            <a href="{{ url_for('lectDashboard') }}"><img src="{{ url_for('static', filename='img/logo/logo.png') }}"
+                    alt=""></a>
+        </div>
+
+        <div class="message">
+            <div class="circle"></div>
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png" class="icn" alt="">
+            <div class="dp">
+                <a href="{{ url_for( 'lecturerProfile') }}" class="user-link">
+                    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+                        class="dpicn" alt="dp">
+                </a>
+            </div>
+        </div>
+
+    </header>
+
+    <div class="main-container">
+        <div class="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+                    <div class="nav-option option1">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
+                            class="nav-img" alt="dashboard">
+                        <!--<h3><a style="color: white;" href="lectDashboard.html">Dashboard</a></h3>-->
+                        <h3><a style="color: white;" href="{{ url_for('lectDashboard') }}">Dashboard</a></h3>
+
+                    </div>
+
+					<div class="nav-option logout">
+						<a href="{{ url_for('logout') }}">
+							<div class="flex-container">
+								<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+									class="nav-img" alt="logout">
+								<h3 style="margin-left: 15px">Logout</h3>
+							</div>
+						</a>
+					</div>
+
+                </div>
+            </nav>
+        </div>
+
+        <div class="main" style="background-color: #cad7fda4;">
+
+            <div class="searchbar2">
+                <input type="text" name="" id="" placeholder="Search">
+                <div class="searchbtn">
+                    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
+                        class="icn srchicn" alt="search-button">
+                </div>
+            </div>
+
+            <!-- main content -->
+            <section>
+                <div class="container">
+                    <div class="row">
+                        {% if lecturer_infor %}
+                        <div class="col-lg-4">
+                            <div class="card mb-4">
+                                <div class="card-body text-center">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                        alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                                    <h5 class="my-3">{{ lecturer_infor[0] }}</h5>
+                                    <div class="d-flex justify-content-center mb-2">
+                                        <button type="button" class="btn btn-primary"><i
+                                                class="ace-icon fa fa-tags white  bigger-120"></i> {{ lecturer_infor[1]
+                                            }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <!-- Header with light grey background -->
+                            <div
+                                style="background-color: #f5f5f5; padding: 2px 10px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                                <h5 class="d-flex align-items-center justify-content-between my-3">
+                                    Personal Particulars
+                                    <button class="btn btn-link" style="color: #00A65A; cursor: pointer;"
+                                        id="editButton">Edit</button>
+                                </h5>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <form id="profileForm" method="POST" action="/lecturerProfile">
+                                        <input type="hidden" name="studentID" id="studentID" value="{{ lecturer_id }}">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Gender</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="genderField" name="genderField"
+                                                    class="text-muted" style="width: 100%;"
+                                                    value="{{ lecturer_infor[3] }}" disabled>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">College Email</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="text-muted" style="width: 100%;"
+                                                    id="emailField" name="emailField" value="{{ lecturer_infor[2] }}"
+                                                    disabled>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr>
+                                    <button id="saveButton" type="button" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- JS here -->
+    <!-- All JS Custom Plugins Link Here here -->
+    <script src="{{ url_for('static', filename='js/vendor/modernizr-3.5.0.min.js') }}"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="{{ url_for('static', filename='js/vendor/jquery-1.12.4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="{{ url_for('static', filename='js/jquery.slicknav.min.js') }}"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/price_rangs.js') }}"></script>
+
+    <!-- One Page, Animated-HeadLin -->
+    <script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/animated.headline.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.magnific-popup.js') }}"></script>
+
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="{{ url_for('static', filename='js/jquery.scrollUp.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.sticky.js') }}"></script>
+
+    <!-- contact js -->
+    <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.form.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.validate.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/mail-script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.ajaxchimp.min.js') }}"></script>
+
+
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/dashboard-index.js') }}"></script>
+
+
+    <script>
+        const editButton = document.getElementById("editButton");
+        const genderField = document.getElementById("genderField");
+        const emailField = document.getElementById("emailField");
+
+        editButton.addEventListener("click", function () {
+            if (editButton.textContent === "Edit") {
+                // Enable all input fields
+                genderField.disabled = false;
+                emailField.disabled = false;
+
+                // Change button text to "Cancel"
+                editButton.textContent = "Cancel";
+
+                // Show the Save button
+                saveButton.style.display = "block";
+            } else {
+                // Reset fields and disable them
+                genderField.disabled = true;
+                emailField.disabled = true;
+
+                // Change button text back to "Edit"
+                editButton.textContent = "Edit";
+
+                // Hide the Save button
+                saveButton.style.display = "none";
+            }
+        });
+
+        saveButton.addEventListener("click", function () {
+            // Submit the form when the Save button is clicked
+            profileForm.submit();
+
+            // Disable all input fields
+            genderField.disabled = true;
+            emailField.disabled = true;
+
+            // Change button text back to "Edit"
+            editButton.textContent = "Edit";
+
+            // Hide the Save button
+            saveButton.style.display = "none";
+        });
+    </script>
+
+</body>
+
+</html>

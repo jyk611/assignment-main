@@ -10,15 +10,26 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-	<title>GeeksForGeeks</title>
-    <link rel="stylesheet" href="lectDashboard-style.css">
-    <link rel="stylesheet" href="lectDashboard-responsive.css">
-
-		<!--<link rel="stylesheet" href="{{ url_for('static', filename='css/lectDashboard-style.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/lectDashboard-responsive.css') }}">-->
+	<title>Job Flnder</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/lectDashboard-style.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/lectDashboard-responsive.css') }}">
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1130/aws-sdk.min.js"></script>
 
+	<style>
+		.flex-container {
+			display: flex;
+			/* Use Flexbox layout */
+			align-items: center;
+			/* Vertically center the content */
+		}
+
+		/* Adjust margin or spacing as needed */
+		.nav-img {
+			margin-right: 10px;
+			/* Add some spacing between the image and text */
+		}
+	</style>
 
 </head>
 
@@ -27,18 +38,19 @@
 	<!-- for header part -->
 	<header>
 
-		<div class="logosec">
-			<div class="logo">GeeksForGeeks</div>
-			<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182541/Untitled-design-(30).png"
-				class="icn menuicn" id="menuicn" alt="menu-icon">
+		<div class="logo" style="margin-top:15px;">
+			<a href="{{ url_for('lectDashboard') }}"><img src="{{ url_for('static', filename='img/logo/logo.png') }}"
+					alt=""></a>
 		</div>
 
 		<div class="message">
 			<div class="circle"></div>
 			<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png" class="icn" alt="">
 			<div class="dp">
-				<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
-					class="dpicn" alt="dp">
+				<a href="{{ url_for( 'lecturerProfile') }}" class="user-link">
+					<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+						class="dpicn" alt="dp">
+				</a>
 			</div>
 		</div>
 
@@ -55,24 +67,14 @@
 						<h3><a href="{{ url_for('lectDashboard') }}">Dashboard</a></h3>
 					</div>
 
-					<div class="option2 nav-option">
-						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"
-							class="nav-img" alt="articles">
-                        <!--<h3><a href="lectViewReport.html">View Report</a></h3>-->
-                        <h3><a href="{{ url_for('lectViewReport') }}">Dashboard</a></h3>
-					</div>
-					
-					<div class="nav-option option1">
-						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"
-							class="nav-img" alt="articles">
-						<!--<h3><a style="color: white;" href="lectViewForm.html">View Form</a></h3>-->
-                        <h3><a style="color: white;" href="{{ url_for('lectViewForm') }}">Dashboard</a></h3>
-					</div>
-
 					<div class="nav-option logout">
-						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
-							class="nav-img" alt="logout">
-						<h3>Logout</h3>
+						<a href="{{ url_for('logout') }}">
+							<div class="flex-container">
+								<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+									class="nav-img" alt="logout">
+								<h3 style="margin-left: 15px">Logout</h3>
+							</div>
+						</a>
 					</div>
 				</div>
 			</nav>
@@ -81,7 +83,7 @@
 		<div class="main">
 			<div class="report-container">
 				<div class="report-header">
-					<h1 class="recent-Articles">List of Form</h1>
+					<h1 class="recent-Articles">List of Report</h1>
 					<div class="searchbar">
 						<input type="text" placeholder="Search">
 						<div class="searchbtn">
@@ -90,51 +92,30 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-body">
+				<div class="report-body">
 					<div class="col-xl-10 col-lg-10">
-						<div class="rpt-details1  mb-60">
-							<div class="form-info">
-								<h5>Form 1</h5>
-								<ul>
-									<li><strong>Student Name:</strong> Kuah Jia YU</li>
-									<li><strong>Student ID:</strong> 22WMR05348</li>
-									<li><strong>Programme:</strong> Bachelor of Computer Science (Honours) in Data Science</li>
-									<li><strong>Tutorial Group:</strong> 3</li>
-									<li><strong>Submission Date:</strong> 8 September 2023</li>
-									<li><strong>Submission Time:</strong> 11:23pm</li>
-								</ul>
-							</div>
-							<div class="button-container">
-								<div class="view-btn">
-									<a href="#" class="btn" onclick="showReport('Article73.pdf')">View Form</a>
-								</div>
-								<div class="download-btn">
-									<a href="Article73.pdf" download class="btn">Download Form</a>
-								</div>
-							</div>
-						</div>
+						<h4>Student ID: {{ studentID }}</h4>
 
-						<div class="rpt-details2  mb-50">
-							<div class="form-info">
-								<h5>Form 2</h5>
+						{% for studFile in studFiles %}
+						<div class="rpt-details1  mb-60">
+							<div class="report-info">
+								<h5>{{ studFile['file_path'] }}</h5>
 								<ul>
-									<li><strong>Student Name:</strong> Kuah Jia YU</li>
-									<li><strong>Student ID:</strong> 22WMR05348</li>
-									<li><strong>Tutorial Group:</strong> 3</li>
-									<li><strong>Programme:</strong> Bachelor of Computer Science (Honours) in Data Science</li>
-									<li><strong>Submission Date:</strong> 12 May 2023</li>
-									<li><strong>Submission Time:</strong> 10:09am</li>
+									<li><strong>Submission Date:</strong> {{ studFile['last_modified'] }}</li>
+									<li><strong>Submission Time:</strong> {{ studFile['time'] }}</li>
 								</ul>
 							</div>
 							<div class="button-container">
 								<div class="view-btn">
-									<a href="#" class="btn" onclick="showReport('Article71.pdf')">View Form</a>
+									<a href="{{ studFile['file_path'] }}" class="btn"
+										onclick="showReport('{{ studFile['file_path'] }}')">View Report</a>
 								</div>
 								<div class="download-btn">
-									<a href="Article71.pdf" download class="btn">Download Form</a>
+									<a href="{{ studFile['file_path'] }}" download class="btn">Download Report</a>
 								</div>
 							</div>
 						</div>
+						{% endfor %}
 					</div>
 				</div>
 				<div id="pdf-container" style="display: none;">
@@ -145,7 +126,7 @@
 		</div>
 	</div>
 
-	<script src="./lectDashboard-index.js"></script>
+	<script src="{{ url_for('static', filename='js/lectDashboard-index.js') }}"></script>
 	<!-- Optional JavaScript; choose one of the two! -->
 
 	<!-- Option 1: Bootstrap Bundle with Popper -->
@@ -179,24 +160,24 @@
 
 			// Show the Back button
 			const backBtn = document.getElementById('back-btn');
-            backBtn.style.display = 'block';
+			backBtn.style.display = 'block';
 		}
 
 		function goBack() {
-            // Hide the PDF container
-            const pdfContainer = document.getElementById('pdf-container');
-            pdfContainer.style.display = 'none';
+			// Hide the PDF container
+			const pdfContainer = document.getElementById('pdf-container');
+			pdfContainer.style.display = 'none';
 
-            // Hide the Back button
-            const backBtn = document.getElementById('back-btn');
-            backBtn.style.display = 'none';
+			// Hide the Back button
+			const backBtn = document.getElementById('back-btn');
+			backBtn.style.display = 'none';
 
-            // Show all report sections (you can customize this behavior if needed)
-            const reportSections = document.querySelectorAll('.rpt-details1, .rpt-details2');
-            reportSections.forEach(section => {
-                section.style.display = 'block';
-            });
-        }
+			// Show all report sections (you can customize this behavior if needed)
+			const reportSections = document.querySelectorAll('.rpt-details1, .rpt-details2');
+			reportSections.forEach(section => {
+				section.style.display = 'block';
+			});
+		}
 	</script>
 
 </body>

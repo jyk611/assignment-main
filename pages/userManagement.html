@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,
+				initial-scale=1.0">
+	<title>Job Flnder - User Management</title>
+	<link rel="stylesheet" href="../static/css/dashboard-style.css">
+	<link rel="stylesheet" href="../static/css/dashbaord-responsive.css">
+	<link rel="stylesheet" href="../static/css/adminDashboard.css">
+	<link rel="stylesheet" href="../static/css/approveCompanies.css">
+	<link rel="stylesheet" href="../static/css/listCompanies.css">
+	<link rel="stylesheet" href="../static/css/userManagement.css">
+
+	<!-- MDB -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+	<style>
+		h3 {
+			display: flex;
+			font-size: 15px;
+			margin-block-start: 1em;
+			margin-block-end: 1em;
+			margin-inline-start: 0px;
+			margin-inline-end: 0px;
+			font-weight: bold;
+		}
+
+		/* Remove border from input type="text" */
+		input[type="text"] {
+			border: none;
+		}
+
+		/* Change background color to white when input is disabled */
+		input[type="text"]:disabled {
+			background-color: white;
+		}
+
+		.flex-container {
+			display: flex;
+			/* Use Flexbox layout */
+			align-items: center;
+			/* Vertically center the content */
+		}
+
+		/* Adjust margin or spacing as needed */
+		.nav-img {
+			margin-right: 10px;
+			/* Add some spacing between the image and text */
+		}
+	</style>
+</head>
+
+<body>
+
+	<!-- for header part -->
+	<header>
+
+		<div class="logo" style="margin-top:15px;">
+			<a href="{{ url_for('admin_dashboard') }}"><img src="{{ url_for('static', filename='img/logo/logo.png') }}"
+					alt=""></a>
+		</div>
+
+		<div class="message">
+			<div class="circle"></div>
+			<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png" class="icn" alt="">
+			<div class="dp">
+				<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+					class="dpicn" alt="dp">
+			</div>
+		</div>
+
+	</header>
+
+	<div class="main-container">
+		<div class="navcontainer">
+			<nav class="nav">
+				<div class="nav-upper-options">
+					<div class="nav-option">
+						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
+							class="nav-img" alt="dashboard">
+						<h3><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></h3>
+					</div>
+
+					<div class="nav-option option2">
+						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183320/5.png"
+							class="nav-img" alt="report">
+						<h3><a href="{{ url_for('approve_companies') }}">Approve Registered Companies</a></h3>
+					</div>
+
+					<div class="nav-option option3">
+						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"
+							class="nav-img" alt="articles">
+						<h3><a href="{{ url_for('list_companies') }}">List of Approved Companies</a></h3>
+					</div>
+
+					<div class="nav-option option1">
+						<img src="../static/img/user-management-icon.png" class="nav-img" alt="user-management">
+						<h3><a style="color: white;" href="{{ url_for('user_management') }}">Student Management</a></h3>
+					</div>
+
+					<div class="nav-option option4">
+						<img src="../static/img/user-management-icon.png" class="nav-img" alt="user-management">
+						<h3><a href="{{ url_for('lecturerManagement') }}">Lecturer Management</a></h3>
+					</div>
+
+					<div class="nav-option logout">
+						<a href="{{ url_for('logout') }}">
+							<div class="flex-container">
+								<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+									class="nav-img" alt="logout">
+								<h3 style="margin-left: 15px">Logout</h3>
+							</div>
+						</a>
+					</div>
+
+				</div>
+			</nav>
+		</div>
+
+		<div class="main" style="background-color: #cad7fda4;">
+			<h1>Student Management</h1>
+			{% for studData in student_data %}
+			<!-- User List -->
+			<div class="row">
+				<div class="col-11">
+					<h5 class="mt-5">{{ studData[0] }}</h5>
+				</div>
+				<div class="col-1">
+					<form method="POST" action="/studentManagementDelete" class="mt-4">
+						<input type="hidden" name="studentID" value="{{ studData[0] }}">
+						<button class="delete-button">Delete</button>
+					</form>
+				</div>
+			</div>
+			<div class="user-list">
+				<div class="user">
+					<form class="profileForm" method="POST" action="/user_management">
+						<!-- Add a hidden input field for student ID -->
+						<input type="hidden" class="student-id-input" name="studID" value="{{ studData[0] }}">
+						<div class="row">
+							<div class="col-2">
+								<p class="mb-0">Student Name: </p>
+							</div>
+							<div class="col-4">
+								<input type="text" class="text-muted mt-2" style="width: 100%;" id="name" name="name"
+									value="{{ studData[1] ~ ' ' ~ studData[2] }}">
+							</div>
+							<div class="col-2">
+								<p class="mb-0">Email: </p>
+							</div>
+							<div class="col-4">
+								<input type="text" class="text-muted mt-2" style="width: 100%;" id="email" name="email"
+									value="{{ studData[4] }}">
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-2">
+								<p class="mb-0">NRIC No: </p>
+							</div>
+							<div class="col-4">
+								<input type="text" class="text-muted mt-2" style="width: 100%;" id="nric" name="nric"
+									value="{{ studData[6] }}">
+							</div>
+							<div class="col-2">
+								<p class="mb-0">Programme: </p>
+							</div>
+							<div class="col-4">
+								<input type="text" class="text-muted mt-2" style="width: 100%;" id="programme"
+									name="programme" value="{{ studData[7] }}">
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-2">
+								<p class="mb-0">Date-of-Birth: </p>
+							</div>
+							<div class="col-4">
+								<input type="text" class="text-muted mt-2" style="width: 100%;" id="dob" name="dob"
+									value="{{ studData[12] }}">
+							</div>
+							<div class="col-2">
+								<p class="mb-0">Tutorial Group: </p>
+							</div>
+							<div class="col-4">
+								<input type="text" class="text-muted mt-2" style="width: 100%;" id="tutGroup"
+									name="tutGroup" value="{{ studData[8] }}">
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-2">
+								<p class="mb-0">Mobile No.: </p>
+							</div>
+							<div class="col-4">
+								<input type="text" class="text-muted mt-2" style="width: 100%;" id="contact"
+									name="contact" value="{{ studData[13] }}">
+							</div>
+							<div class="col-2">
+								<p class="mb-0">CGPA: </p>
+							</div>
+							<div class="col-4">
+								<input type="text" class="text-muted mt-2" style="width: 100%;" id="cgpa" name="cgpa"
+									value="{{ studData[9] }}">
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-2">
+								<p class="mb-0">Home Address: </p>
+							</div>
+							<div class="col-4">
+								<input type="text" class="text-muted mt-2" style="width: 100%;" id="homeAdd"
+									name="homeAdd" value="{{ studData[14] }}">
+							</div>
+							<div class="col-2">
+								<p class="mb-0">UC Supervisor: </p>
+							</div>
+							<div class="col-4">
+								<select id="ucSupervisor" name="ucSupervisor"
+									class="custom-select form-control form-control-lg"
+									style="background-color: white; border: none; padding: 0px;">
+									<option value="{{ studData[10] ~ ', ' ~ studData[11] }}" selected>{{ studData[10] }}
+									</option>
+									{% for lecturer in lecturer_data %}
+									<option value="{{ lecturer[0] ~ ', ' ~ lecturer[1] }}">{{ lecturer[0] }}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-2">
+								<p class="mb-0">Correspondence Address: </p>
+							</div>
+							<div class="col-4">
+								<input type="text" class="text-muted mt-2" style="width: 100%;" id="CorrespondenceAdd"
+									name="CorrespondenceAdd" value="{{ studData[15] }}">
+							</div>
+							<div class="col-2">
+								<p class="mb-0">Gender: </p>
+							</div>
+							<div class="col-4">
+								<input type="text" class="text-muted mt-2" style="width: 100%;" id="gender"
+									name="gender" value="{{ studData[3] }}">
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-12 text-center"> <!-- Center the button within a full-width column -->
+								<button id="saveButton" class="save-button">Save Change</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	<script src="../static/js/dashboard-index.js"></script>
+
+</body>
+
+</html>

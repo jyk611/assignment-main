@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Job Flnder - Register</title>
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/global.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{ url_for('static', filename='css/login_register.css')}}" rel="stylesheet" type="text/css" />
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+
+</head>
+
+<body>
+  <div class="card mask">
+    <div class="row g-0">
+      <!-- Left Col Image -->
+      <div class="col-md-6 col-lg-6 d-none d-md-block">
+        <img src="{{ url_for('static', filename='img/login-register/register-pic2.jpg')}}" alt="Sample photo"
+          class="img-fluid" style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; " />
+      </div>
+
+        <!-- Right Col Form -->
+        <div class="col-md-6 col-lg-6 d-flex bg-image"
+          style="background-image: url('{{ url_for('static', filename='img/logo/logo-2.png') }}'); height: 100vh;">
+          <div class="card-body p-4 p-lg-4 text-black">
+            <!-- Logo -->
+            <h1 class="logo mb-10 text-center fw-bold"></h1>
+
+            <!-- Form To Submit -->
+            <form method="POST" >
+              <div class="d-flex align-items-center mb-3 pb-1">
+                <i class="fa-solid fa-circle-user fa-3x text-danger me-4"></i>
+                <span class="h1 fw-bold mb-0 text-danger">Register</span>
+              </div>
+              <h5 class="fw-normal mb-4">Please enter your details to register an account</h5>
+              
+              <input type="hidden" id="email" name="email" value="">
+
+              <!-- Apply MDB custom-select class to the select element -->
+              <div class="mb-4">
+                <select id="level" name="level" class="custom-select form-control form-control-lg">
+                  <option value="1">Level</option>
+                  <option value="2">Foundation</option>
+                  <option value="3">Diploma</option>
+                  <option value="4">Bachelor</option>
+                </select>
+              </div>
+
+              <!-- Apply MDB custom-select class to the select element -->
+              <div class="row">
+                <div class="mb-4">
+                  <select id="programmeSelect" name="programmeSelect" class="custom-select form-control form-control-lg">
+                    <option value="1">Programme</option>
+                    <option value="2">Bachelor of Science (Honours) in Management Mathematics with Computing</option>
+                    <option value="3">Bachelor of Computer Science (Honours) in Interactive Software Technology</option>
+                    <option value="4">Bachelor of Computer Science (Honours) in Data Science</option>
+                    <option value="5">Bachelor of Information Systems (Honours) in Enterprise Information Systems
+                    </option>
+                    <option value="6">Bachelor of Information Technology (Honours) in Software Systems Development
+                    </option>
+                    <option value="7">Bachelor of Information Technology (Honours) in Information Security</option>
+                    <option value="8">Bachelor of Information Technology (Honours) in Internet Technology</option>
+                    <option value="9">Bachelor of Software Engineering (Honours)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input type="text" id="tutorialGrp" name="tutorialGrp" class="form-control form-control-lg"
+                      placeholder="e.g: 1 - 5" />
+                    <label class="form-label" for="tutorialGrp">Tutorial Group</label>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input type="text" id="studentID" name="studentID" class="form-control form-control-lg"
+                      placeholder="e.g: 99WMR9999" />
+                    <label class="form-label" for="studentID">Student ID</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-outline mb-4">
+                <input type="text" id="cgpa" name="cgpa" class="form-control form-control-lg" />
+                <label class="form-label" for="cgpa">CGPA</label>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input type="text" id="ucSupervisor" name="ucSupervisor" class="form-control form-control-lg" />
+                    <label class="form-label" for="cgpa">UC Supervisor</label>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input type="text" id="ucSupervisorEmail" name="ucSupervisorEmail"
+                      class="form-control form-control-lg" />
+                    <label class="form-label" for="ucSupervisorEmail">UC Supervisor Email</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Submit Btn -->
+              <div class="mt-4 mb-5 d-flex justify-content-between align-items-center">
+                <a href="{{ url_for('register') }}"
+                  class="btn btn-primary btn-rounded btn-lg btn-block me-4 bg-primary"><b>Back</b></a>
+                <button id="registerBtn" name="registerBtn" class="btn btn-danger btn-rounded btn-lg btn-block ms-4"
+                  type="submit"><b>Register</b></button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </div>
+
+    <!-- Script Links -->
+    <!-- jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Font Awesome -->
+    <script src="https://use.fontawesome.com/b2bae79a4d.js"></script>
+
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
+
+    <!-- login register validation -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/login_register.js')}}"></script>
+
+</html>

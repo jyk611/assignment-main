@@ -341,8 +341,7 @@ header {
 
 .report-body {
     max-width: 1160px;
-    overflow-x: auto;
-    padding: 20px;
+    padding: 20px 0px;
 }
 
 .report-topic-heading {
@@ -379,15 +378,6 @@ header {
     background-color: rgb(0, 177, 0);
     color: white;
     border-radius: 4px;
-}
-
-/*View Report page*/
-/* Style for the report-body container with a single scrollbar */
-.report-body {
-    max-height: 450px;
-    /* Set a maximum height for the container */
-    overflow-y: auto;
-    /* Enable vertical scrollbar if content overflows */
 }
 
 /* Style for the report sections */

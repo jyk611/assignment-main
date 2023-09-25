@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,
+				initial-scale=1.0">
+    <title>JOB FINDER</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard-responsive.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jobRegister.css') }}">
+
+    <style>
+        .flex-container {
+            display: flex;
+            /* Use Flexbox layout */
+            align-items: center;
+            /* Vertically center the content */
+        }
+
+        /* Adjust margin or spacing as needed */
+        .nav-img {
+            margin-right: 10px;
+            /* Add some spacing between the image and text */
+        }
+
+        .t-op2{
+            padding: 20px;
+        }
+        .t-op2:hover{
+            background-color: rgb(189, 202, 225);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- for header part -->
+    <header>
+
+        <div class="logo" style="margin-top:15px;">
+            <a href="{{ url_for('companyDashboard') }}"><img src="{{ url_for('static', filename='img/logo/logo.png') }}"
+                    alt=""></a>
+        </div>
+
+        <div class="message">
+            <div class="circle"></div>
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png" class="icn" alt="">
+            <div class="dp">
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+                    class="dpicn" alt="dp">
+            </div>
+        </div>
+
+    </header>
+
+    <div class="main-container">
+        <div class="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+                    <div class="nav-option option1">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
+                            class="nav-img" alt="dashboard">
+                        <h3><a style="color: white;" href="{{ url_for('companyDashboard')}}">Dashboard</a></h3>
+                    </div>
+
+                    <div class="nav-option option2 ">
+                        <img src="{{ url_for('static', filename='img/icon/jobApplicationicon.png') }}" class="nav-img"
+                            alt="dashboard">
+                        <h3><a href="{{ url_for('jobReg')}}">Job Application</a></h3>
+                    </div>
+
+                    <div class="nav-option logout">
+                        <a href="{{ url_for('logout') }}">
+                            <div class="flex-container">
+                                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+                                    class="nav-img" alt="logout">
+                                <h3 style="margin-left: 15px">Logout</h3>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+
+        <div class="main">
+
+            <div class="searchbar2">
+                <input type="text" name="" id="" placeholder="Search">
+                <div class="searchbtn">
+                    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
+                        class="icn srchicn" alt="search-button">
+                </div>
+            </div>
+
+            <div class="box-container">
+                <div class="hero__caption">
+                    <span class="user-name" style="color: rgb(21, 14, 45); font-size: 50px;"><b>Welcome, {{
+                            user_login_name }}</b></span>
+                </div>
+
+            </div>
+
+            <div class="report-container">
+                <div class="report-header">
+                    <h1 class="recent-Articles">Job Posted</h1>
+                </div>
+
+                <div class="report-body">
+                    <div class="report-topic-heading">
+                        <h3 class="t-op">Job Title</h3>
+                    </div>
+
+                    <div class="report-topic-heading">
+                        <ol>
+                            {% for job in job_data %}
+                            <li>
+                                <div class="t-op2">
+                                    <a
+                                        href="{{ url_for('jobDetail', user_login_name=user_login_name, job_name=job[2]) }}" >
+                                        <h4>{{ job[2] }}</h4>
+                                    </a>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ol>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard-index.js') }}"></script>
+
+    <!-- login register validation -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/company.js')}}"></script>
+</body>
+
+</html>

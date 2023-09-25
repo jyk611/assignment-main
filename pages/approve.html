@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,
+				initial-scale=1.0">
+	<title>Job Flnder - Approve Companies</title>
+	<link rel="stylesheet" href="../static/css/dashboard-style.css">
+	<link rel="stylesheet" href="../static/css/dashbaord-responsive.css">
+	<link rel="stylesheet" href="../static/css/adminDashboard.css">
+	<link rel="stylesheet" href="../static/css/approveCompanies.css">
+
+	<script src="../static/js/approveCompanies.js"></script>
+
+	<style>
+		.flex-container {
+			display: flex;
+			/* Use Flexbox layout */
+			align-items: center;
+			/* Vertically center the content */
+		}
+
+		/* Adjust margin or spacing as needed */
+		.nav-img {
+			margin-right: 10px;
+			/* Add some spacing between the image and text */
+		}
+	</style>
+</head>
+
+<body>
+
+	<!-- for header part -->
+	<header>
+
+		<div class="logo" style="margin-top:15px;">
+			<a href="{{ url_for('admin_dashboard') }}"><img src="{{ url_for('static', filename='img/logo/logo.png') }}"
+					alt=""></a>
+		</div>
+
+		<div class="message">
+			<div class="circle"></div>
+			<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png" class="icn" alt="">
+			<div class="dp">
+				<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+					class="dpicn" alt="dp">
+			</div>
+		</div>
+
+	</header>
+
+
+	<div class="main-container">
+		<div class="navcontainer">
+			<nav class="nav">
+				<div class="nav-upper-options">
+					<div class="nav-option">
+						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
+							class="nav-img" alt="dashboard">
+						<h3><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></h3>
+					</div>
+
+					<div class="nav-option option1">
+						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183320/5.png"
+							class="nav-img" alt="articles">
+						<h3><a style="color: white;" href="{{ url_for('approve_companies') }}">Approve Pending
+								Companies</a></h3>
+					</div>
+
+					<div class="nav-option option3">
+						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"
+							class="nav-img" alt="report">
+						<h3><a href="{{ url_for('list_companies') }}">List of Approved Companies</a></h3>
+					</div>
+
+					<div class="nav-option option4">
+						<img src="../static/img/user-management-icon.png" class="nav-img" alt="user-management">
+						<h3><a href="{{ url_for('user_management') }}">Student Management</a></h3>
+					</div>
+
+					<div class="nav-option option4">
+						<img src="../static/img/user-management-icon.png" class="nav-img" alt="user-management">
+						<h3><a href="{{ url_for('lecturerManagement') }}">Lecturer Management</a></h3>
+					</div>
+
+					<div class="nav-option logout">
+						<a href="{{ url_for('logout') }}">
+							<div class="flex-container">
+								<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+									class="nav-img" alt="logout">
+								<h3 style="margin-left: 15px">Logout</h3>
+							</div>
+						</a>
+					</div>
+
+				</div>
+			</nav>
+		</div>
+
+		<div class="main">
+
+			<section class="approve-companies">
+				<h1>Approve Pending Companies</h1>
+				<!-- Check if there are pending companies -->
+				{% if companies %}
+				<!-- List of companies to be approved -->
+				<ul>
+					{% for company in companies %}
+					<form method="POST" action="/approve_companies">
+						<input type="hidden" name="compID" value="{{ company[0] }}">
+						{% if company[3] == 'pending' %}
+						<li>
+							<div class="company-info">
+								<h2>{{ company[1] }}</h2>
+								<p>{{ company[2] }}</p>
+							</div>
+							<div class="action-buttons">
+								<button class="approve-button" name="action" value="Approve">Approve</button>
+								<button class="reject-button" name="action" value="Reject">Reject</button>
+							</div>
+						</li>
+						{% endif %}
+					</form>
+					{% endfor %}
+				</ul>
+				{% else %}
+				<!-- Display a message when there are no pending companies -->
+				<p>All companies are registered.</p>
+				{% endif %}
+			</section>
+		</div>
+	</div>
+	</div>
+
+	<script src="../static/js/dashboard-index.js"></script>
+</body>
+
+</html>

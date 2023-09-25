@@ -59,24 +59,54 @@
                                         <ul id="navigation">
                                             <li><a href="{{ url_for('index') }}">Home</a></li>
                                             <li><a href="{{ url_for('job_listing') }}">Find a Job</a></li>
-                                            <li><a href="{{ url_for('about') }}">About</a></li>
-                                            <li>
-                                                <a href="#">Pages</a>
-                                                <ul class="submenu">
-                                                    <li><a href="{{ url_for('blog') }}">Blog</a></li>
-                                                    <li><a href="{{ url_for('single_blog') }}">Blog Details</a></li>
-                                                    <li><a href="{{ url_for('elements') }}">Elements</a></li>
-                                                    <li><a href="{{ url_for('job_details') }}">Job Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                                            <!-- <li><a href="{{ url_for('about') }}">About</a></li>
+                                            <li><a href="{{ url_for('contact') }}">Contact</a></li> -->
                                         </ul>
                                     </nav>
                                 </div>
                                 <!-- Header-btn -->
                                 <div class="header-btn d-none f-right d-lg-block">
-                                    <a href="#" class="btn head-btn1">Register</a>
-                                    <a href="#" class="btn head-btn2">Login</a>
+                                    {% if user_authenticated %}
+                                    <!-- User is authenticated, show User Profile button -->
+                                    <div class="user-profile">
+                                        <a href="javascript:void(0);" class="user-link"
+                                            onclick="submitStudentID('{{ studentID }}')">
+                                            <span class="user-name" style="color:black">Welcome, {{ user_login_name
+                                                }}</span>
+                                            <i class="fas fa-user fa-2x user-icon" style="color:black"></i>
+                                        </a>
+                                    </div>
+                                    {% else %}
+                                    <!-- User is not authenticated, show Register and Login buttons -->
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Register <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{ url_for('register') }}">Student</a>
+                                            </li>
+                                            <li>
+                                                <hr class="dropdown-divider" />
+                                            </li>
+                                            <li><a class="dropdown-item"
+                                                    href="{{ url_for('lectRegister') }}">Lecturer</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider" />
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{ url_for('adminRegister') }}">Admin</a>
+                                            </li>
+                                            <li>
+                                                <hr class="dropdown-divider" />
+                                            </li>
+                                            <li><a class="dropdown-item"
+                                                    href="{{ url_for('companyRegister') }}">Company</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="btn-group">
+                                        <a href="{{ url_for('login') }}" class="btn btn-default btn-login">Login</a>
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -296,162 +326,39 @@
                                     </div>
                                 </div>
                                 <!-- Count of Job list End -->
-                                <!-- single-job-content -->
+                                {% for data in comp_data %}
                                 <div class="single-job-items mb-30">
                                     <div class="job-items">
                                         <div class="company-img">
-                                            <a href="#"><img
-                                                    src="{{ url_for('static', filename='img/icon/job-list1.png') }}"
-                                                    alt=""></a>
+                                            <a href="#">
+                                                <img src="{{ data[1] }}" alt="{{ data[1] }}">
+                                            </a>
                                         </div>
                                         <div class="job-tittle job-tittle2">
                                             <a href="#">
-                                                <h4>Digital Marketer</h4>
+                                                <h4>{{ data[2] }}</h4>
                                             </a>
                                             <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
+                                                <li>{{ data[0] }}</li>
+                                                <li><i class="fas fa-map-marker-alt"></i>{{ data[3] }}</li>
+                                                <li>{{ data[4] }}</li>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="{{ url_for('job_details') }}">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
+                                    <form id="fileForm" method="POST" action="/upload" enctype="multipart/form-data"
+                                        class="file-form">
+                                        <div class="items-link f-right">
+                                            <label class="btn btn-primary btn-file"
+                                                style="background-color:white; border: 2px solid #007bff; padding: 0px 40px; cursor: pointer;">
+                                                <p style="padding-top: 10px">Apply</p>
+                                                <input id="file-input-{{ data[5] }}" type="file" name="cv"
+                                                    style="display: none;" data-jobid="{{ data[5] }}">
+                                            </label>
+                                        </div>
+                                        <input type="hidden" name="jobID" id="jobID" value="{{ data[5] }}">
+                                    </form>
                                 </div>
-                                <!-- single-job-content -->
-                                <div class="single-job-items mb-30">
-                                    <div class="job-items">
-                                        <div class="company-img">
-                                            <a href="#"><img src="{{ url_for('static', filename='img/icon/job-list2.png') }}" alt=""></a>
-                                        </div>
-                                        <div class="job-tittle job-tittle2">
-                                            <a href="#">
-                                                <h4>Digital Marketer</h4>
-                                            </a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="{{ url_for('job_details') }}">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                                <!-- single-job-content -->
-                                <div class="single-job-items mb-30">
-                                    <div class="job-items">
-                                        <div class="company-img">
-                                            <a href="#"><img src="{{ url_for('static', filename='img/icon/job-list3.png') }}" alt=""></a>
-                                        </div>
-                                        <div class="job-tittle job-tittle2">
-                                            <a href="#">
-                                                <h4>Digital Marketer</h4>
-                                            </a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="{{ url_for('job_details') }}">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                                <!-- single-job-content -->
-                                <div class="single-job-items mb-30">
-                                    <div class="job-items">
-                                        <div class="company-img">
-                                            <a href="#"><img src="{{ url_for('static', filename='img/icon/job-list4.png') }}" alt=""></a>
-                                        </div>
-                                        <div class="job-tittle job-tittle2">
-                                            <a href="#">
-                                                <h4>Digital Marketer</h4>
-                                            </a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="{{ url_for('job_details') }}">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                                <!-- single-job-content -->
-                                <div class="single-job-items mb-30">
-                                    <div class="job-items">
-                                        <div class="company-img">
-                                            <a href="#"><img src="{{ url_for('static', filename='img/icon/job-list1.png') }}" alt=""></a>
-                                        </div>
-                                        <div class="job-tittle job-tittle2">
-                                            <a href="#">
-                                                <h4>Digital Marketer</h4>
-                                            </a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="{{ url_for('job_details') }}">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                                <!-- single-job-content -->
-                                <div class="single-job-items mb-30">
-                                    <div class="job-items">
-                                        <div class="company-img">
-                                            <a href="#"><img src="{{ url_for('static', filename='img/icon/job-list3.png') }}" alt=""></a>
-                                        </div>
-                                        <div class="job-tittle job-tittle2">
-                                            <a href="#">
-                                                <h4>Digital Marketer</h4>
-                                            </a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="{{ url_for('job_details') }}">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                                <!-- single-job-content -->
-                                <div class="single-job-items mb-30">
-                                    <div class="job-items">
-                                        <div class="company-img">
-                                            <a href="#"><img src="{{ url_for('static', filename='img/icon/job-list4.png') }}" alt=""></a>
-                                        </div>
-                                        <div class="job-tittle job-tittle2">
-                                            <a href="#">
-                                                <h4>Digital Marketer</h4>
-                                            </a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="{{ url_for('job_details') }}">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </section>
                         <!-- Featured_job_end -->
@@ -662,6 +569,43 @@
     <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
+    <!-- JavaScript function to submit studentID -->
+    <script>
+        function submitStudentID(studentID) {
+            // Set the value of the hidden input field
+            document.getElementById('studentIDField').value = studentID;
+            // Submit the form
+            document.getElementById('studentIDForm').submit();
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const fileForms = document.querySelectorAll(".file-form");
+
+            fileForms.forEach((fileForm) => {
+                const fileInput = fileForm.querySelector("input[type='file']");
+                const jobIDInput = fileForm.querySelector("input[name='jobID']");
+
+                fileInput.addEventListener("change", function () {
+                    // Get the selected file's name
+                    const fileName = fileInput.files[0].name;
+
+                    // Get the job ID from the data attribute
+                    const jobID = fileInput.getAttribute("data-jobid");
+
+                    // Set the job ID in the hidden input field
+                    jobIDInput.value = jobID;
+
+                    // Display the file name (you can customize this)
+                    alert("Selected file: " + fileName);
+
+                    // Submit the form programmatically
+                    fileForm.submit();
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

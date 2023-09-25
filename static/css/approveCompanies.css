@@ -1,0 +1,67 @@
+/* Style the main content */
+main {
+    margin: 20px;
+}
+
+.approve-companies {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.approve-companies h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Style the list of companies */
+.approve-companies ul {
+    list-style: none;
+}
+
+.approve-companies li {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Style the company info */
+.company-info h2 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.company-info p {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+/* Styles for action buttons (Approve and Reject) */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.approve-button, .reject-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.reject-button {
+    background-color: #f44336;
+}
+
+/* Hover effect for buttons */
+.approve-button:hover, .reject-button:hover {
+    opacity: 0.8;
+}

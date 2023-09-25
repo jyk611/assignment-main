@@ -6,10 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,
 				initial-scale=1.0">
-    <title>GeeksForGeeks</title>
+    <title>JOB FINDER</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard-style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard-responsive.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/jobRegister.css') }}">
+
+    <style>
+        .flex-container {
+            display: flex;
+            /* Use Flexbox layout */
+            align-items: center;
+            /* Vertically center the content */
+        }
+
+        /* Adjust margin or spacing as needed */
+        .nav-img {
+            margin-right: 10px;
+            /* Add some spacing between the image and text */
+        }
+    </style>
 </head>
 
 <body>
@@ -17,20 +32,9 @@
     <!-- for header part -->
     <header>
 
-        <div class="logosec">
-            <a href="index.html">
-                <div class="logo">Job Finder</div>
-                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182541/Untitled-design-(30).png"
-                    class="icn menuicn" id="menuicn" alt="menu-icon">
-            </a>
-        </div>
-
-        <div class="searchbar">
-            <input type="text" placeholder="Search">
-            <div class="searchbtn">
-                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
-                    class="icn srchicn" alt="search-icon">
-            </div>
+        <div class="logo" style="margin-top:15px;">
+            <a href="{{ url_for('companyDashboard') }}"><img src="{{ url_for('static', filename='img/logo/logo.png') }}"
+                    alt=""></a>
         </div>
 
         <div class="message">
@@ -48,26 +52,26 @@
         <div class="navcontainer">
             <nav class="nav">
                 <div class="nav-upper-options">
-                    <div class="nav-option option1">
-                        <h3><a style="color: white;" href="{{ url_for('companyDashboard')}}">Dashboard</a></h3>
+                    <div class="nav-option">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
+                            class="nav-img" alt="dashboard">
+                        <h3><a href="{{ url_for('companyDashboard')}}">Dashboard</a></h3>
                     </div>
 
-                    <div class="option2 nav-option">
-                        <h3><a href="{{ url_for('jobReg')}}">Job Application</a></h3>
-                    </div>
-
-                    <div class="nav-option option3">
-                        <h3><a href="{{ url_for('report')}}">Edit Job</a></h3>
-                    </div>
-
-                    <div class="nav-option option4">
-                        <h3><a href="{{ url_for('report')}}">Approve Job</a></h3>
+                    <div class="nav-option option1 ">
+                        <img src="{{ url_for('static', filename='img/icon/jobApplicationicon.png') }}" class="nav-img"
+                            alt="dashboard">
+                        <h3><a style="color: white;" href="{{ url_for('jobReg')}}">Job Application</a></h3>
                     </div>
 
                     <div class="nav-option logout">
-                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
-                            class="nav-img" alt="logout">
-                        <h3>Logout</h3>
+                        <a href="{{ url_for('logout') }}">
+                            <div class="flex-container">
+                                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+                                    class="nav-img" alt="logout">
+                                <h3 style="margin-left: 15px">Logout</h3>
+                            </div>
+                        </a>
                     </div>
 
                 </div>
@@ -82,7 +86,7 @@
                 </div>
 
                 <div class="report-body">
-                    <div class="note">
+                    <div class="note" style="border: 2px solid rgb(86, 86, 86);">
                         <b>Things to note (Read before filling the form)</b>
                         <ul class="note-list">
                             <li>One response per position (Fill in another response for another position)</li>
@@ -95,81 +99,76 @@
                     </div>
                     <div class="form-container">
                         <form autocomplete="on" method="POST" enctype="multipart/form-data">
+                            <p class="error-message" id="error-message" style="color: red;">{{ jobRegError }}</p>
                             <div class="side-by-side">
-                                <label for="comp_name">Company Name in FULL:</label>
-                                <textarea id="comp_name" name="comp_name" rows="2" cols="50"
-                                    placeholder="Eg: Tunku Abdul Rahman University of Management and Technology"
-                                    required></textarea>
-                                <br>
-                                <label for="job_title">Job Title/Position:</label>
-                                <textarea id="job_title" name="job_title" rows="2" cols="50"
+                                <label for="job_title"><b>Job Title/Position:</b></label>
+                                <textarea id="job_title" name="job_title" rows="2" cols="50" style="padding: 4px;"
                                     placeholder="Eg: Data Science" required></textarea>
                                 <br>
-                                <label for="job_desc">Job Description:</label>
-                                <textarea id="job_desc" name="job_desc" rows="4" cols="50"
+                                <label for="job_desc"><b>Job Description:</b></label>
+                                <textarea id="job_desc" name="job_desc" rows="4" cols="50" style="padding: 4px;"
                                     placeholder="Please type here..." required></textarea>
                                 <br>
-                                <label for="job_req">Job Requirement:</label>
-                                <textarea id="job_req" name="job_req" rows="4" cols="50"
+                                <label for="job_req"><b>Job Requirement:</b></label>
+                                <textarea id="job_req" name="job_req" rows="4" cols="50" style="padding: 4px;"
                                     placeholder="Please type here..." required></textarea>
                                 <br>
-                                <label for="sal_range">Salary Range (RM):</label>
+                                <label for="sal_range"><b>Salary Range (RM):</b></label>
 
                                 <label class="radio-label" for="range1">
                                     <input type="radio" id="range1" name="sal_range" value="RM1500 - 2000">
-                                    RM1500 - 2000
+                                    <b>RM1500 - 2000</b>
                                 </label>
                                 <label class="radio-label" for="range2">
                                     <input type="radio" id="range2" name="sal_range" value="RM2001 - 2500">
-                                    RM2001 - 2500
+                                    <b>RM2001 - 2500</b>
                                 </label>
                                 <label class="radio-label" for="range3">
                                     <input type="radio" id="range3" name="sal_range" value="RM2501 - 3000">
-                                    RM2501 - 3000
+                                    <b>RM2501 - 3000</b>
                                 </label>
                                 <label class="radio-label" for="range4">
                                     <input type="radio" id="range4" name="sal_range" value="RM3001 - 3500">
-                                    RM3001 - 3500
+                                    <b>RM3001 - 3500</b>
                                 </label>
                                 <label class="radio-label" for="range5">
                                     <input type="radio" id="range5" name="sal_range" value="RM3501 - 4000">
-                                    RM3501 - 4000
+                                    <b>RM3501 - 4000</b>
                                 </label>
                                 <label class="radio-label" for="range6">
                                     <input type="radio" id="range6" name="sal_range" value="RM4001 - 5000">
-                                    RM4001 - 5000
+                                    <b>RM4001 - 5000</b>
                                 </label>
                                 <label class="radio-label" for="range7">
                                     <input type="radio" id="range7" name="sal_range" value="RM5000 and above">
-                                    RM5000 and above
+                                    <b>RM5000 and above</b>
                                 </label>
                             </div>
                             <div class="side-by-side">
-                                <label for="contact_person_name">Contact Person Name (For Job Application):</label>
-                                <input type="text" id="contact_person_name" name="contact_person_name"
+                                <label for="contact_person_name"><b>Contact Person Name (For Job
+                                        Application):</b></label>
+                                <input type="text" id="contact_person_name" name="contact_person_name" style="padding: 2px;"
                                     placeholder="Eg: Ali bin Abu" required>
                                 <br>
-                                <label for="contact_person_email">Contact Person Email Address (For Job
-                                    Application):</label>
-                                <input type="text" id="contact_person_email" name="contact_person_email"
+                                <label for="contact_person_email"><b>Contact Person Email Address (For Job
+                                        Application):</b></label>
+                                <input type="text" id="contact_person_email" name="contact_person_email" style="padding: 2px;"
                                     placeholder="Eg: abc123@gmail.com" required>
                                 <br>
-                                <label for="contact_number">Phone Number for Job Enquiries if applicable (For Job
-                                    Application):</label>
-                                <input type="text" id="contact_number" name="contact_number"
+                                <label for="contact_number"><b>Phone Number for Job Enquiries if applicable (For Job
+                                        Application):</b></label>
+                                <input type="text" id="contact_number" name="contact_number" style="padding: 2px;"
                                     placeholder="Eg: 016-123 4567" required>
                                 <br>
-                                <label for="comp_state">Which state is your company in:</label>
-                                <input type="text" id="comp_state" name="comp_state" placeholder="Eg: Pahang" required>
+                                <label for="comp_state"><b>Which state is your company in:</b></label>
+                                <input type="text" id="comp_state" name="comp_state" style="padding: 2px;" placeholder="Eg: Pahang" required>
                                 <br>
-                                <label for="companyImage">Upload Company Image:</label>
-                                <input type="file" id="companyImage" name="companyImage" accept="image/*">
-                            </div>
-                            <div class="extralogo">
-                                <img src="../static/img/logo/logo.png" alt="">
-                            </div>
-                            <div class="submit">
-                                <button type="submit">Submit</button>
+
+                                <div class="bottom-elements">
+                                    <div class="submit">
+                                        <button type="submit">Submit</button>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -181,7 +180,7 @@
     <script src="{{ url_for('static', filename='js/dashboard-index.js') }}"></script>
 
     <!-- login register validation -->
-    <script type="text/javascript" src="{{ url_for('static', filename='js/login_register.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/company.js')}}"></script>
 </body>
 
 </html>

@@ -123,12 +123,23 @@
 
                         <!-- Click to Register Page -->
                         <div class="mt-5">
-                            <p>Don't have an account?
-                                <a href="{{ url_for('register')}}" class="text-danger">
-                                    <span>Sign up now</span>
-                                    &#x2192
-                                </a>
-                            </p>
+                            <p>Don't have an account?</p>
+                            <a href="{{ url_for('register')}}" class="text-danger">
+                                <span>Sign up now (Student)</span>
+                                &#x2192
+                            </a>
+                            <a href="{{ url_for('lectRegister')}}" class="text-danger">
+                                <span>Sign up now (Lecturer)</span>
+                                &#x2192
+                            </a>
+                            <a href="{{ url_for('adminRegister')}}" class="text-danger">
+                                <span>Sign up now (Admin)</span>
+                                &#x2192
+                            </a>
+                            <a href="{{ url_for('companyRegister')}}" class="text-danger">
+                                <span>Sign up now (Company)</span>
+                                &#x2192
+                            </a>
                         </div>
 
                     </form>

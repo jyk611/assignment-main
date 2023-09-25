@@ -109,6 +109,19 @@
 			cursor: pointer;
 			/* Add a pointer cursor to the trash icon */
 		}
+
+		.flex-container {
+			display: flex;
+			/* Use Flexbox layout */
+			align-items: center;
+			/* Vertically center the content */
+		}
+
+		/* Adjust margin or spacing as needed */
+		.nav-img {
+			margin-right: 10px;
+			/* Add some spacing between the image and text */
+		}
 	</style>
 </head>
 
@@ -121,20 +134,14 @@
 					alt=""></a>
 		</div>
 
-		<div class="searchbar">
-			<input type="text" placeholder="Search">
-			<div class="searchbtn">
-				<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
-					class="icn srchicn" alt="search-icon">
-			</div>
-		</div>
-
 		<div class="message">
 			<div class="circle"></div>
 			<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png" class="icn" alt="">
 			<div class="dp">
-				<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
-					class="dpicn" alt="dp">
+				<a href="javascript:void(0);" class="user-link" onclick="submitStudentIDdp('{{ studentID }}')">
+					<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+						class="dpicn" alt="dp">
+				</a>
 			</div>
 		</div>
 
@@ -166,9 +173,13 @@
 					</div>
 
 					<div class="nav-option logout">
-						<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
-							class="nav-img" alt="logout">
-						<h3>Logout</h3>
+						<a href="{{ url_for('logout') }}">
+							<div class="flex-container">
+								<img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+									class="nav-img" alt="logout">
+								<h3 style="margin-left: 15px">Logout</h3>
+							</div>
+						</a>
 					</div>
 				</div>
 
@@ -215,8 +226,8 @@
 						{% if list_of_files %}
 						{% if list_of_files[0]%}
 						<i class="fas fa-file-pdf file-icon"></i>
-						<a href="{{ my_bucket.meta.client.generate_presigned_url('get_object', Params={'Bucket': my_bucket.name, 'Key': 'Student/' + studentID + '/Form/' + list_of_files[0]}) }}"
-							download="{{ list_of_files[0] }}">
+						<a href="{{ my_bucket.meta.client.generate_presigned_url('get_object', Params={'Bucket': my_bucket.name, 'Key': 'Lecturer/' + lecturerID + "
+							/" + studentID + '/Form/' + list_of_files[0]}) }}" download="{{ list_of_files[0] }}">
 							{{ list_of_files[0] }}
 						</a>
 						<input type="hidden" name="acceptanceFormFileName" id="acceptanceFormFileName"

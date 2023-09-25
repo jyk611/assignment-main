@@ -12,6 +12,52 @@
 
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <style>
+        h3 {
+            display: flex;
+            font-size: 15px;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: bold;
+        }
+
+        /* Remove border from input type="text" */
+        input[type="text"] {
+            border: none;
+        }
+
+        /* Change background color to white when input is disabled */
+        input[type="text"]:disabled {
+            background-color: white;
+        }
+
+        #saveButton {
+            display: none;
+        }
+
+        #saveStudentButton {
+            display: none;
+        }
+
+        .flex-container {
+            display: flex;
+            /* Use Flexbox layout */
+            align-items: center;
+            /* Vertically center the content */
+        }
+
+        /* Adjust margin or spacing as needed */
+        .nav-img {
+            margin-right: 10px;
+            /* Add some spacing between the image and text */
+        }
+    </style>
 </head>
 
 <body>
@@ -19,25 +65,19 @@
     <!-- for header part -->
     <header>
 
-        <div class="logo" style="margin-top:15px;">
+        <div class="logo" style="margin-top:2px;">
             <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='img/logo/logo.png') }}"
                     alt=""></a>
-        </div>
-
-        <div class="searchbar">
-            <input type="text" placeholder="Search">
-            <div class="searchbtn">
-                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
-                    class="icn srchicn" alt="search-icon">
-            </div>
         </div>
 
         <div class="message">
             <div class="circle"></div>
             <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png" class="icn" alt="">
             <div class="dp">
-                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
-                    class="dpicn" alt="dp">
+                <a href="javascript:void(0);" class="user-link" onclick="submitStudentIDdp('{{ studentID }}')">
+                    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+                        class="dpicn" alt="dp">
+                </a>
             </div>
         </div>
 
@@ -69,9 +109,13 @@
                     </div>
 
                     <div class="nav-option logout">
-                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
-                            class="nav-img" alt="logout">
-                        <h3>Logout</h3>
+                        <a href="{{ url_for('logout') }}">
+                            <div class="flex-container">
+                                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+                                    class="nav-img" alt="logout">
+                                <h3 style="margin-left: 15px">Logout</h3>
+                            </div>
+                        </a>
                     </div>
                 </div>
 
@@ -91,10 +135,14 @@
                     <input type="hidden" name="studentID" id="studentIDFieldReport" value="">
                 </form>
 
+                <!-- Add a hidden form for submitting studentID -->
+                <form id="studentIDdp" method="GET" action="{{ url_for('studentProfile')}}">
+                    <input type="hidden" name="studentID" id="studentIDFielddp" value="">
+                </form>
             </nav>
         </div>
 
-        <div class="main">
+        <div class="main" style="background-color: #cad7fda4;">
 
             <div class="searchbar2">
                 <input type="text" name="" id="" placeholder="Search">
@@ -105,178 +153,179 @@
             </div>
 
             <!-- main content -->
-            <section style="background-color: #eee;">
-                <div class="container py-5">
+            <section>
+                <div class="container">
                     <div class="row">
+                        {% if student_infor %}
                         <div class="col-lg-4">
                             <div class="card mb-4">
                                 <div class="card-body text-center">
                                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
                                         alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-                                    <h5 class="my-3">John Smith</h5>
-                                    <p class="text-muted mb-1">Full Stack Developer</p>
-                                    <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+                                    <h5 class="my-3">{{ student_infor[1] ~ ' ' ~ student_infor[2] }}</h5>
                                     <div class="d-flex justify-content-center mb-2">
-                                        <button type="button" class="btn btn-primary">Follow</button>
-                                        <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                                        <button type="button" class="btn btn-primary"><i
+                                                class="ace-icon fa fa-tags white  bigger-120"></i> {{ student_infor[0]
+                                            }}</button>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="card mb-4 mb-lg-0">
-                                <div class="card-body p-0">
-                                    <ul class="list-group list-group-flush rounded-3">
-                                        <li
-                                            class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                            <i class="fas fa-globe fa-lg text-warning"></i>
-                                            <p class="mb-0">https://mdbootstrap.com</p>
-                                        </li>
-                                        <li
-                                            class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                            <i class="fab fa-github fa-lg" style="color: #333333;"></i>
-                                            <p class="mb-0">mdbootstrap</p>
-                                        </li>
-                                        <li
-                                            class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                            <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
-                                            <p class="mb-0">@mdbootstrap</p>
-                                        </li>
-                                        <li
-                                            class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                            <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
-                                            <p class="mb-0">mdbootstrap</p>
-                                        </li>
-                                        <li
-                                            class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                            <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
-                                            <p class="mb-0">mdbootstrap</p>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-8">
+                            <!-- Header with light grey background -->
+                            <div
+                                style="background-color: #f5f5f5; padding: 2px 10px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                                <h5 class="d-flex align-items-center justify-content-between my-3">
+                                    Personal Particulars
+                                    <button class="btn btn-link" style="color: #00A65A; cursor: pointer;"
+                                        id="editButton">Edit</button>
+                                </h5>
+                            </div>
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <p class="mb-0">Full Name</p>
+                                    <form id="profileForm" method="POST" action="/studentProfilePersonal">
+                                        <input type="hidden" name="studentID" id="studentID" value="{{ studentID }}">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Gender</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="genderField" name="genderField"
+                                                    class="text-muted" style="width: 100%;"
+                                                    value="{{ student_infor[3] }}" disabled>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-9">
-                                            <p class="text-muted mb-0">Johnatan Smith</p>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">NRIC No.</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="text-muted" style="width: 100%;" id="nric"
+                                                    name="nric" value="{{ student_infor[6] }}" disabled>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Date-of-Birth</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="text-muted" style="width: 100%;" id="dob"
+                                                    name="dob" value="{{ student_infor[12] }}" disabled>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Mobile No.</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="text-muted" style="width: 100%;" id="contact"
+                                                    name="contact" value="{{ student_infor[13] }}" disabled>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Home Address</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="text-muted" style="width: 100%;" id="homeAdd"
+                                                    name="homeAdd" value="{{ student_infor[14] }}" disabled>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Correspondence Address</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="text-muted" style="width: 100%;"
+                                                    id="correspondenceAdd" name="correspondenceAdd"
+                                                    value="{{ student_infor[15] }}" disabled>
+                                            </div>
+                                        </div>
+                                    </form>
                                     <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <p class="mb-0">Email</p>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <p class="text-muted mb-0">example@example.com</p>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <p class="mb-0">Phone</p>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <p class="text-muted mb-0">(097) 234-5678</p>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <p class="mb-0">Mobile</p>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <p class="text-muted mb-0">(098) 765-4321</p>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <p class="mb-0">Address</p>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
-                                        </div>
-                                    </div>
+                                    <button id="saveButton" type="button" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card mb-4 mb-md-0">
-                                        <div class="card-body">
-                                            <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span>
-                                                Project
-                                                Status
-                                            </p>
-                                            <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                                            <div class="progress rounded" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 80%"
-                                                    aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <!-- Header with light grey background -->
+                            <div
+                                style="background-color: #f5f5f5; padding: 2px 10px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                                <h5 class="d-flex align-items-center justify-content-between my-3">
+                                    Student Particulars
+                                    <button class="btn btn-link" style="color: #00A65A; cursor: pointer;"
+                                        id="editStudentButton">Edit</button>
+                                </h5>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <form id="profileFormStudent" method="POST" action="/studentPersonal">
+                                        <input type="hidden" name="studentID" id="studentID" value="{{ studentID }}">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Email</p>
                                             </div>
-                                            <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                                            <div class="progress rounded" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 72%"
-                                                    aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                                            <div class="progress rounded" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 89%"
-                                                    aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
-                                            <div class="progress rounded" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 55%"
-                                                    aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
-                                            <div class="progress rounded mb-2" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 66%"
-                                                    aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="text-muted" style="width: 100%;" id="email"
+                                                    name="email" value="{{ student_infor[4] }}" disabled>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card mb-4 mb-md-0">
-                                        <div class="card-body">
-                                            <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span>
-                                                Project
-                                                Status
-                                            </p>
-                                            <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                                            <div class="progress rounded" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 80%"
-                                                    aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Programme</p>
                                             </div>
-                                            <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                                            <div class="progress rounded" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 72%"
-                                                    aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                                            <div class="progress rounded" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 89%"
-                                                    aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
-                                            <div class="progress rounded" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 55%"
-                                                    aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
-                                            <div class="progress rounded mb-2" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 66%"
-                                                    aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="text-muted" style="width: 100%;"
+                                                    id="programme" name="programme" value="{{ student_infor[7] }}"
+                                                    disabled>
                                             </div>
                                         </div>
-                                    </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Tutorial Group</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="text-muted" style="width: 100%;" id="tutGroup"
+                                                    name="tutGroup" value="{{ student_infor[8] }}" disabled>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">CGPA</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="text-muted" style="width: 100%;" id="cgpa"
+                                                    name="cgpa" value="{{ student_infor[9] }}" disabled>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">UC Supervisor</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="text-muted" style="width: 100%;"
+                                                    id="ucSupervisor" name="ucSupervisor"
+                                                    value="{{ student_infor[10] }}" disabled>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr>
+                                    <button id="saveStudentButton" type="button" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </section>
         </div>
@@ -347,6 +396,137 @@
             // Submit the form
             document.getElementById('studentIDReportForm').submit();
         }
+    </script>
+
+    <script>
+        function submitStudentIDdp(studentID) {
+            // Set the value of the hidden input field
+            document.getElementById('studentIDFielddp').value = studentID;
+            // Submit the form
+            document.getElementById('studentIDdp').submit();
+        }
+    </script>
+
+    <script>
+        const editButton = document.getElementById("editButton");
+        const genderField = document.getElementById("genderField");
+        const nricField = document.getElementById("nric");
+        const dobField = document.getElementById("dob");
+        const contactField = document.getElementById("contact");
+        const homeAddField = document.getElementById("homeAdd");
+        const correspondenceAddField = document.getElementById("correspondenceAdd");
+        const saveButton = document.getElementById("saveButton");
+        const profileForm = document.getElementById("profileForm");
+
+        editButton.addEventListener("click", function () {
+            if (editButton.textContent === "Edit") {
+                // Enable all input fields
+                genderField.disabled = false;
+                nricField.disabled = false;
+                dobField.disabled = false;
+                contactField.disabled = false;
+                homeAddField.disabled = false;
+                correspondenceAddField.disabled = false;
+
+                // Change button text to "Cancel"
+                editButton.textContent = "Cancel";
+
+                // Show the Save button
+                saveButton.style.display = "block";
+            } else {
+                // Reset fields and disable them
+                genderField.disabled = true;
+                nricField.disabled = true;
+                dobField.disabled = true;
+                contactField.disabled = true;
+                homeAddField.disabled = true;
+                correspondenceAddField.disabled = true;
+
+                // Change button text back to "Edit"
+                editButton.textContent = "Edit";
+
+                // Hide the Save button
+                saveButton.style.display = "none";
+            }
+        });
+
+        saveButton.addEventListener("click", function () {
+            // Submit the form when the Save button is clicked
+            profileForm.submit();
+
+            // Disable all input fields
+            genderField.disabled = true;
+            nricField.disabled = true;
+            dobField.disabled = true;
+            contactField.disabled = true;
+            homeAddField.disabled = true;
+            correspondenceAddField.disabled = true;
+
+            // Change button text back to "Edit"
+            editButton.textContent = "Edit";
+
+            // Hide the Save button
+            saveButton.style.display = "none";
+        });
+    </script>
+
+    <script>
+        const editStudentButton = document.getElementById("editStudentButton");
+        const emailField = document.getElementById("email");
+        const programmeField = document.getElementById("programme");
+        const tutGroupField = document.getElementById("tutGroup");
+        const cgpaField = document.getElementById("cgpa");
+        // const ucSupervisorField = document.getElementById("ucSupervisor");
+        const saveStudentButton = document.getElementById("saveStudentButton");
+        const profileFormStudent = document.getElementById("profileFormStudent");
+
+        editStudentButton.addEventListener("click", function () {
+            if (editStudentButton.textContent === "Edit") {
+                // Enable all input fields
+                emailField.disabled = false;
+                programmeField.disabled = false;
+                tutGroupField.disabled = false;
+                cgpaField.disabled = false;
+                // ucSupervisorField.disabled = false;
+
+                // Change button text to "Cancel"
+                editStudentButton.textContent = "Cancel";
+
+                // Show the Save button
+                saveStudentButton.style.display = "block";
+            } else {
+                // Reset fields and disable them
+                emailField.disabled = true;
+                programmeField.disabled = true;
+                tutGroupField.disabled = true;
+                cgpaField.disabled = true;
+                // ucSupervisorField.disabled = true;
+
+                // Change button text back to "Edit"
+                editStudentButton.textContent = "Edit";
+
+                // Hide the Save button
+                saveStudentButton.style.display = "none";
+            }
+        });
+
+        saveStudentButton.addEventListener("click", function () {
+            // Submit the form when the Save button is clicked
+            profileFormStudent.submit();
+
+            // Disable all input fields
+            emailField.disabled = true;
+            programmeField.disabled = true;
+            tutGroupField.disabled = true;
+            contactField.disabled = true;
+            // ucSupervisorField.disabled = true;
+
+            // Change button text back to "Edit"
+            editStudentButton.textContent = "Edit";
+
+            // Hide the Save button
+            saveStudentButton.style.display = "none";
+        });
     </script>
 
 </body>

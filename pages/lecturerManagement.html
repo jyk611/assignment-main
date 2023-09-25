@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,
+				initial-scale=1.0">
+    <title>Job Flnder - User Management</title>
+    <link rel="stylesheet" href="../static/css/dashboard-style.css">
+    <link rel="stylesheet" href="../static/css/dashbaord-responsive.css">
+    <link rel="stylesheet" href="../static/css/adminDashboard.css">
+    <link rel="stylesheet" href="../static/css/approveCompanies.css">
+    <link rel="stylesheet" href="../static/css/listCompanies.css">
+    <link rel="stylesheet" href="../static/css/userManagement.css">
+
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <style>
+        h3 {
+            display: flex;
+            font-size: 15px;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: bold;
+        }
+
+        /* Remove border from input type="text" */
+        input[type="text"] {
+            border: none;
+        }
+
+        /* Change background color to white when input is disabled */
+        input[type="text"]:disabled {
+            background-color: white;
+        }
+
+        .flex-container {
+            display: flex;
+            /* Use Flexbox layout */
+            align-items: center;
+            /* Vertically center the content */
+        }
+
+        /* Adjust margin or spacing as needed */
+        .nav-img {
+            margin-right: 10px;
+            /* Add some spacing between the image and text */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- for header part -->
+    <header>
+
+        <div class="logo" style="margin-top:15px;">
+            <a href="{{ url_for('admin_dashboard') }}"><img src="{{ url_for('static', filename='img/logo/logo.png') }}"
+                    alt=""></a>
+        </div>
+
+        <div class="message">
+            <div class="circle"></div>
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png" class="icn" alt="">
+            <div class="dp">
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+                    class="dpicn" alt="dp">
+            </div>
+        </div>
+
+    </header>
+
+    <div class="main-container">
+        <div class="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+                    <div class="nav-option">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
+                            class="nav-img" alt="dashboard">
+                        <h3><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></h3>
+                    </div>
+
+                    <div class="nav-option option2">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183320/5.png"
+                            class="nav-img" alt="report">
+                        <h3><a href="{{ url_for('approve_companies') }}">Approve Registered Companies</a></h3>
+                    </div>
+
+                    <div class="nav-option option3">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"
+                            class="nav-img" alt="articles">
+                        <h3><a href="{{ url_for('list_companies') }}">List of Approved Companies</a></h3>
+                    </div>
+
+                    <div class="nav-option option4">
+                        <img src="../static/img/user-management-icon.png" class="nav-img" alt="user-management">
+                        <h3><a href="{{ url_for('user_management') }}">Student Management</a></h3>
+                    </div>
+
+                    <div class="nav-option option1">
+                        <img src="../static/img/user-management-icon.png" class="nav-img" alt="user-management">
+                        <h3><a style="color: white;" href="{{ url_for('user_management') }}">Lecturer Management</a></h3>
+                    </div>
+
+                    <div class="nav-option logout">
+                        <a href="{{ url_for('logout') }}">
+                            <div class="flex-container">
+                                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+                                    class="nav-img" alt="logout">
+                                <h3 style="margin-left: 15px">Logout</h3>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+
+        <div class="main" style="background-color: #cad7fda4;">
+            <h1>Lecturer Management</h1>
+            {% for lectData in lecturer_data %}
+            <!-- User List -->
+            <div class="row">
+                <div class="col-11">
+                    <h5 class="mt-5">{{ lectData[1] }}</h5>
+                </div>
+                <div class="col-1">
+                    <form method="POST" action="/lecturerManagementDelete" class="mt-4">
+                        <input type="hidden" name="idField" value="{{ lectData[1] }}">
+                        <button class="delete-button">Delete</button>
+                    </form>
+                </div>
+            </div>
+            <div class="user-list">
+                <div class="user">
+                    <form class="profileForm" method="POST" action="/lecturerManagement">
+                        <!-- Add a hidden input field for student ID -->
+                        <input type="hidden" name="idField" value="{{ lectData[1] }}">
+                        <div class="row">
+                            <div class="col-2">
+                                <p class="mb-0">Lecturer Name: </p>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" class="text-muted mt-2" style="width: 100%;" id="nameField"
+                                    name="nameField" value="{{ lectData[0] }}">
+                            </div>
+                            <div class="col-2">
+                                <p class="mb-0">Email: </p>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" class="text-muted mt-2" style="width: 100%;" id="emailField"
+                                    name="emailField" value="{{ lectData[2] }}">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-2">
+                                <p class="mb-0">Gender: </p>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" class="text-muted mt-2" style="width: 100%;" id="genderField"
+                                    name="genderField" value="{{ lectData[3] }}">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-12 text-center"> <!-- Center the button within a full-width column -->
+                                <button id="saveButton" class="save-button">Save Change</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="../static/js/dashboard-index.js"></script>
+
+</body>
+
+</html>
